@@ -38,8 +38,8 @@ namespace InternalsViewer.UI.Markers
 
                 SetMarkerPosition(item, marker);
 
-                var member = (UnaryExpression)item.PropertyExpression.Body;
-                var x = member..Name;
+                var member = item.PropertyExpression.Body as MemberExpression ?? ((UnaryExpression)item.PropertyExpression.Body).Operand as MemberExpression;
+                var x = member.Member.Name;
 
                 var property = member.Member;
 
@@ -72,14 +72,11 @@ namespace InternalsViewer.UI.Markers
                 {
                     marker.Name = property.Name;
                 }
-
-                var p = markedObject.GetType().GetProperty(property.Name);
-
-
+                
                 // Check if there is an index, if there is it indicates the property is an array
                 if (item.Index < 0)
                 {
-                    var value = p.GetValue(markedObject, null);
+                    var value = member.GetValue(markedObject, null);
 
                     SetValue<T>(markers, marker, value, prefix + item.Prefix);
                 }

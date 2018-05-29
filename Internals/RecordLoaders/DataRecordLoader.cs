@@ -241,7 +241,7 @@ namespace InternalsViewer.Internals.RecordLoaders
                     else
                     {
                         //TODO: Investigate this
-                        //field.Mark(p => p.Value, dataRecord.SlotOffset + field.Offset, field.Length);
+                        field.Mark(p => p.Value, dataRecord.SlotOffset + field.Offset, field.Length);
                     }
 
                     dataRecord.Mark(p => p.FieldsArray, field.Name, index);
