@@ -1,30 +1,33 @@
 ﻿
+using System;
+using System.Linq.Expressions;
+
 namespace InternalsViewer.Internals
 {
-    public class MarkItem
+    public class MarkItem<T>
     {
-        public MarkItem(string propertName, int startPosition, int length)
+        public MarkItem(Expression<Func<T, object>> property, int startPosition, int length)
         {
-            PropertyName = propertName;
+            PropertyExpression = property;
             StartPosition = startPosition;
             Length = length;
         }
 
-        public MarkItem(string propertName, int startPosition, int length, int index)
-            : this(propertName, startPosition, length)
+        public MarkItem(Expression<Func<T, object>> property, int startPosition, int length, int index)
+            : this(property, startPosition, length)
         {
             Index = index;
         }
 
-        public MarkItem(string propertName, string prefix, int startPosition, int length, int index)
-            : this(propertName, startPosition, length, index)
+        public MarkItem(Expression<Func<T, object>> property, string prefix, int startPosition, int length, int index)
+            : this(property, startPosition, length, index)
         {
             Prefix = prefix;
         }
 
-        public MarkItem(string propertyName, string prefix, int index)
+        public MarkItem(Expression<Func<T, object>> propertyName, string prefix, int index)
         {
-            PropertyName = propertyName;
+            PropertyExpression = propertyName;
             Prefix = prefix;
             Index = index;
             StartPosition = -1;
@@ -34,11 +37,11 @@ namespace InternalsViewer.Internals
         public int StartPosition { get; set; }
 
         public int Length { get; set; }
-
-        public string PropertyName { get; set; }
-
+        
         public int Index { get; set; } = -1;
 
         public string Prefix { get; set; }
+        
+        public Expression<Func<T, object>> PropertyExpression { get; set; }
     }
 }

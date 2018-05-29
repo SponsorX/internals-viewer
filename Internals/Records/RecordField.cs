@@ -6,7 +6,7 @@ namespace InternalsViewer.Internals.Records
     /// <summary>
     /// Record field
     /// </summary>
-    public class RecordField : Field
+    public class RecordField : Field<RecordField>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="RecordField"/> class.
@@ -17,7 +17,7 @@ namespace InternalsViewer.Internals.Records
             Column = column;
         }
 
-        public BlobField BlobInlineRoot { get; set; }
+        public object BlobInlineRoot { get; set; }
 
         public Column Column { get; set; }
 

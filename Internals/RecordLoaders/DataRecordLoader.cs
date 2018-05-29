@@ -36,17 +36,15 @@ namespace InternalsViewer.Internals.RecordLoaders
             var columnCountOffsetPosition = dataRecord.SlotOffset + sizeof(byte) + sizeof(byte);
 
             dataRecord.ColumnCountOffset = BitConverter.ToInt16(dataRecord.Page.PageData, columnCountOffsetPosition);
-
-            dataRecord.Mark("ColumnCountOffset", columnCountOffsetPosition, sizeof(short));
-
-            dataRecord.Mark("ColumnCountOffset", columnCountOffsetPosition, sizeof(short));
+            
+            dataRecord.Mark(p => p.ColumnCountOffset, columnCountOffsetPosition, sizeof(short));
 
             // Column count 2-byte int located at the column count offset
             var columnCountPosition = dataRecord.SlotOffset + dataRecord.ColumnCountOffset;
 
             dataRecord.ColumnCount = BitConverter.ToInt16(dataRecord.Page.PageData, columnCountPosition);
 
-            dataRecord.Mark("ColumnCount", columnCountPosition, sizeof(short));
+            dataRecord.Mark(p => p.ColumnCount, columnCountPosition, sizeof(short));
 
             if (dataRecord.HasNullBitmap)
             {
@@ -71,7 +69,7 @@ namespace InternalsViewer.Internals.RecordLoaders
 
                     dataRecord.VariableLengthColumnCount = BitConverter.ToUInt16(dataRecord.Page.PageData, dataRecord.SlotOffset + varColCountOffset);
 
-                    dataRecord.Mark("VariableLengthColumnCount", dataRecord.SlotOffset + varColCountOffset, sizeof(short));
+                    dataRecord.Mark(p => p.VariableLengthColumnCount, dataRecord.SlotOffset + varColCountOffset, sizeof(short));
 
                     // Offset starts after the variable length column count (2-bytes)
                     offsetStart = (short)(varColCountOffset + sizeof(short));
@@ -82,7 +80,7 @@ namespace InternalsViewer.Internals.RecordLoaders
                                                            dataRecord.VariableLengthColumnCount,
                                                            dataRecord.SlotOffset + offsetStart);
 
-                dataRecord.Mark("ColOffsetArrayDescription", dataRecord.SlotOffset + offsetStart, dataRecord.VariableLengthColumnCount * sizeof(short));
+                dataRecord.Mark(p => p.ColOffsetArrayDescription, dataRecord.SlotOffset + offsetStart, dataRecord.VariableLengthColumnCount * sizeof(short));
 
             }
             else
@@ -121,7 +119,7 @@ namespace InternalsViewer.Internals.RecordLoaders
 
             dataRecord.NullBitmap = new BitArray(nullBitmapBytes);
 
-            dataRecord.Mark("NullBitmapDescription", nullBitmapPosition, dataRecord.NullBitmapSize);
+            dataRecord.Mark(p => p.NullBitmapDescription, nullBitmapPosition, dataRecord.NullBitmapSize);
         }
 
         /// <summary>
@@ -148,7 +146,7 @@ namespace InternalsViewer.Internals.RecordLoaders
 
             Array.Copy(dataRecord.Page.PageData, dataRecord.SlotOffset + startOffset, sparseRecord, 0, endOffset - startOffset);
 
-            dataRecord.Mark("SparseVector");
+            dataRecord.Mark(p => p.SparseVector);
 
             dataRecord.SparseVector = new SparseVector(sparseRecord, (TableStructure)dataRecord.Structure, dataRecord, (short)startOffset);
         }
@@ -242,10 +240,11 @@ namespace InternalsViewer.Internals.RecordLoaders
                     }
                     else
                     {
-                        field.Mark("Value", dataRecord.SlotOffset + field.Offset, field.Length);
+                        //TODO: Investigate this
+                        //field.Mark(p => p.Value, dataRecord.SlotOffset + field.Offset, field.Length);
                     }
 
-                    dataRecord.Mark("FieldsArray", field.Name, index);
+                    dataRecord.Mark(p => p.FieldsArray, field.Name, index);
 
                     index++;
 
@@ -269,7 +268,7 @@ namespace InternalsViewer.Internals.RecordLoaders
             record.StatusBitsA = new BitArray(new byte[] { statusA });
             record.StatusBitsB = new BitArray(new byte[] { record.Page.PageData[record.SlotOffset + 1] });
 
-            record.Mark("StatusBitsADescription", record.SlotOffset, sizeof(byte));
+            record.Mark(p => p.StatusBitsADescription, record.SlotOffset, sizeof(byte));
 
             record.RecordType = (RecordType)((statusA >> 1) & 7);
 
@@ -281,7 +280,7 @@ namespace InternalsViewer.Internals.RecordLoaders
             record.HasNullBitmap = record.StatusBitsA[4];
             record.HasVariableLengthColumns = record.StatusBitsA[5];
 
-            record.Mark("StatusBitsBDescription", record.SlotOffset + sizeof(byte), sizeof(byte));
+            record.Mark(p => p.StatusBitsBDescription, record.SlotOffset + sizeof(byte), sizeof(byte));
 
             return record.RecordType;
         }
@@ -298,7 +297,7 @@ namespace InternalsViewer.Internals.RecordLoaders
 
             dataRecord.ForwardingRecord = new RowIdentifier(forwardingRecord);
 
-            dataRecord.Mark("ForwardingRecord", dataRecord.SlotOffset + sizeof(byte), 6);
+            dataRecord.Mark(p => p.ForwardingRecord, dataRecord.SlotOffset + sizeof(byte), 6);
         }
     }
 }

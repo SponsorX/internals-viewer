@@ -16,19 +16,19 @@ namespace InternalsViewer.Internals.RecordLoaders
 
             sparseVector.ComplexHeader = BitConverter.ToInt16(sparseVector.Data, 0);
 
-            sparseVector.Mark("ComplexHeaderDescription", vectorOffset, sizeof(short));
+            sparseVector.Mark(p => p.ComplexHeaderDescription, vectorOffset, sizeof(short));
 
             sparseVector.ColCount = BitConverter.ToInt16(sparseVector.Data, 2);
 
-            sparseVector.Mark("ColCount", vectorOffset + SparseVector.ColCountOffset, sizeof(short));
+            sparseVector.Mark(p => p.ColCount, vectorOffset + SparseVector.ColCountOffset, sizeof(short));
 
             sparseVector.Columns = new ushort[sparseVector.ColCount];
 
-            sparseVector.Mark("ColumnsDescription", vectorOffset + SparseVector.ColumnsOffset, sparseVector.ColCount * sizeof(short));
+            sparseVector.Mark(p => p.ColumnsDescription, vectorOffset + SparseVector.ColumnsOffset, sparseVector.ColCount * sizeof(short));
 
             sparseVector.Offset = new ushort[sparseVector.ColCount];
 
-            sparseVector.Mark("OffsetsDescription",
+            sparseVector.Mark(p => p.OffsetsDescription,
                               vectorOffset + SparseVector.ColumnsOffset + sparseVector.ColCount * sizeof(short),
                               sparseVector.ColCount * sizeof(short));
 
@@ -53,9 +53,9 @@ namespace InternalsViewer.Internals.RecordLoaders
                 field.Offset = sparseVector.Offset[i];
                 field.Length = sparseVector.Offset[i] - previousOffset;
 
-                field.Mark("Value", vectorOffset + previousOffset, field.Length);
+                field.Mark(p => p.Value, vectorOffset + previousOffset, field.Length);
 
-                sparseVector.ParentRecord.Mark("FieldsArray", field.Name + " (Sparse)", sparseVector.ParentRecord.Fields.Count);
+                sparseVector.ParentRecord.Mark(p => p.FieldsArray, field.Name + " (Sparse)", sparseVector.ParentRecord.Fields.Count);
 
                 previousOffset = sparseVector.Offset[i];
                 sparseVector.ParentRecord.Fields.Add(field);

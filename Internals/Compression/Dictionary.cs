@@ -5,7 +5,7 @@ using InternalsViewer.Internals.Records;
 
 namespace InternalsViewer.Internals.Compression
 {
-    public class Dictionary : Markable
+    public class Dictionary : Markable<Dictionary>
     {
         public Dictionary(byte[] data, int offset)
         {
@@ -17,13 +17,13 @@ namespace InternalsViewer.Internals.Compression
         {
             EntryCount = BitConverter.ToInt16(data, offset);
 
-            Mark("EntryCount", offset, sizeof(short));
+            Mark(p => p.EntryCount, offset, sizeof(short));
 
             EntryOffset = new ushort[EntryCount];
 
             var dataOffset = sizeof(short) + (sizeof(short) * EntryCount);
 
-            Mark("EntryOffsetArrayDescription", offset + sizeof(short), EntryCount * sizeof(short));
+            Mark(p => p.EntryOffsetArrayDescription, offset + sizeof(short), EntryCount * sizeof(short));
 
             for (var i = 0; i < EntryCount; i++)
             {
@@ -35,11 +35,11 @@ namespace InternalsViewer.Internals.Compression
 
                 Array.Copy(data, offset + dataOffset, dictionaryData, 0, length);
 
-                Mark("DictionaryEntriesArray", "Dictionary Entry " + i, i);
+                Mark(p => p.DictionaryEntries, "Dictionary Entry " + i, i);
 
                 var entry = new DictionaryEntry(dictionaryData);
 
-                entry.Mark("Data", offset + dataOffset, length);
+                entry.Mark(p => p.Data, offset + dataOffset, length);
 
                 DictionaryEntries.Add(entry);
 
@@ -57,6 +57,6 @@ namespace InternalsViewer.Internals.Compression
         public ushort[] EntryOffset { get; set; }
 
         [Mark(MarkType.ColumnOffsetArray)]
-        public string EntryOffsetArrayDescription => Record.GetArrayString(EntryOffset);
+        public string EntryOffsetArrayDescription => DataRecord.GetArrayString(EntryOffset);
     }
 }

@@ -7,7 +7,7 @@ using InternalsViewer.Internals.RecordLoaders;
 
 namespace InternalsViewer.Internals.Records
 {
-    public class BlobRecord : Record
+    public class BlobRecord : Record<BlobRecord>
     {
         public const short CurLinksOffset = 16;
         public const short DataOffset = 14;

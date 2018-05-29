@@ -7,7 +7,7 @@ using InternalsViewer.Internals.Structures;
 
 namespace InternalsViewer.Internals.Records
 {
-    public class IndexRecord : Record
+    public class IndexRecord : Record<IndexRecord>
     {
         public IndexRecord(Page page, ushort slotOffset, Structure structure)
             : base(page, slotOffset, structure)

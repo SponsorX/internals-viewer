@@ -6,7 +6,7 @@ using InternalsViewer.Internals.Structures;
 
 namespace InternalsViewer.Internals.Records
 {
-    public class DataRecord : Record
+    public class DataRecord : Record<DataRecord>
     {
         public DataRecord(Page page, ushort slotOffset, Structure structure)
             : base(page, slotOffset, structure)

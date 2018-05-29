@@ -10,7 +10,7 @@ using InternalsViewer.Internals.Structures;
 
 namespace InternalsViewer.Internals.Compression
 {
-    public class CompressionInformation: Markable
+    public class CompressionInformation: Markable<CompressionInformation>
     {
         public static byte CiSize = 7;
         public static short Offset = 96;
@@ -34,24 +34,24 @@ namespace InternalsViewer.Internals.Compression
         {
             ci.StatusBits = new BitArray(new byte[] { ci.Page.PageData[ci.SlotOffset] });
 
-            ci.Mark("StatusDescription", ci.SlotOffset, 1);
+            ci.Mark(p=>p.StatusDescription, ci.SlotOffset, 1);
 
             ci.HasAnchorRecord = ci.StatusBits[1];
             ci.HasDictionary = ci.StatusBits[2];
 
             ci.PageModCount = BitConverter.ToInt16(ci.Page.PageData, ci.SlotOffset + 1);
             
-            ci.Mark("PageModCount", ci.SlotOffset + sizeof(byte), sizeof(short));
+            ci.Mark(p=>p.PageModCount, ci.SlotOffset + sizeof(byte), sizeof(short));
 
             ci.Length = BitConverter.ToInt16(ci.Page.PageData, ci.SlotOffset + 3);
 
-            ci.Mark("Length", ci.SlotOffset + sizeof(byte) + sizeof(short), sizeof(short));
+            ci.Mark(p => p.Length, ci.SlotOffset + sizeof(byte) + sizeof(short), sizeof(short));
 
             if (ci.HasDictionary)
             {
                 ci.Size = BitConverter.ToInt16(ci.Page.PageData, ci.SlotOffset + 5);
 
-                ci.Mark("Size", ci.SlotOffset + sizeof(byte) + sizeof(short) + sizeof(short), sizeof(short));
+                ci.Mark(p => p.Size, ci.SlotOffset + sizeof(byte) + sizeof(short) + sizeof(short), sizeof(short));
             }
 
             if (ci.HasAnchorRecord)

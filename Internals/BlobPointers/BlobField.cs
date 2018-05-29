@@ -9,7 +9,7 @@ namespace InternalsViewer.Internals.BlobPointers
     /// <summary>
     /// BLOB internal field
     /// </summary>
-    public class BlobField : Field
+    public class BlobField<T> : Field<T> where T : BlobField<T>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobField"/> class.
@@ -20,7 +20,7 @@ namespace InternalsViewer.Internals.BlobPointers
             PointerType = (BlobFieldType)data[0];
             Offset = offset;
 
-            Mark("PointerType", offset, sizeof(byte));
+            Mark(p => p.PointerType, offset, sizeof(byte));
 
             LoadLinks();
         }

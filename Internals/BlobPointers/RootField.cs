@@ -6,7 +6,7 @@ using InternalsViewer.Internals.Records;
 
 namespace InternalsViewer.Internals.BlobPointers
 {
-    public class RootField : BlobField
+    public class RootField : BlobField<RootField>
     {
         public const int ChildOffset = 12;
         public const short LevelOffset = 2;
@@ -19,19 +19,19 @@ namespace InternalsViewer.Internals.BlobPointers
         {
             Unused = data[UnusedOffset];
 
-            Mark("Unused", offset + UnusedOffset, sizeof(byte));
+            Mark(p=>p.Unused, offset + UnusedOffset, sizeof(byte));
 
             Level = data[LevelOffset];
 
-            Mark("Level", offset + RootField.LevelOffset, sizeof(byte));
+            Mark(p => p.Level, offset + RootField.LevelOffset, sizeof(byte));
 
             Timestamp = BitConverter.ToInt32(data, TimestampOffset);
 
-            Mark("Timestamp", offset + RootField.TimestampOffset, sizeof(int));
+            Mark(p => p.Timestamp, offset + RootField.TimestampOffset, sizeof(int));
 
             UpdateSeq = BitConverter.ToInt16(data, UpdateSeqOffset);
 
-            Mark("UpdateSeq", offset + RootField.UpdateSeqOffset, sizeof(short));
+            Mark(p => p.UpdateSeq, offset + RootField.UpdateSeqOffset, sizeof(short));
         }
 
         protected override void LoadLinks()
@@ -42,7 +42,7 @@ namespace InternalsViewer.Internals.BlobPointers
 
             for (var i = 0; i < SlotCount; i++)
             {
-                Mark("LinksArray", "Child " + i + " - ", i);
+                Mark(p => p.LinksArray, "Child " + i + " - ", i);
 
                 var length = BitConverter.ToInt32(Data, ChildOffset + (i * 12));
 
@@ -53,9 +53,9 @@ namespace InternalsViewer.Internals.BlobPointers
 
                 var link = new BlobChildLink(rowId, 0, length);
 
-                link.Mark("Length", Offset + RootField.ChildOffset + (i * 12), sizeof(int));
+                link.Mark(p => p.Length, Offset + RootField.ChildOffset + (i * 12), sizeof(int));
 
-                link.Mark("RowIdentifier", Offset + RootField.ChildOffset + (i * 12) + sizeof(int), 8);
+                link.Mark(p => p.RowIdentifier, Offset + RootField.ChildOffset + (i * 12) + sizeof(int), 8);
 
                 Links.Add(link);
             }

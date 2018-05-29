@@ -4,7 +4,7 @@ using InternalsViewer.Internals.Structures;
 
 namespace InternalsViewer.Internals.Records
 {
-    public class SparseVector: Markable
+    public class SparseVector: Markable<SparseVector>
     {
         public const int ColCountOffset = 2;
         public const int ColumnsOffset = 4;
@@ -39,10 +39,10 @@ namespace InternalsViewer.Internals.Records
         public ushort[] Columns { get; set; }
 
         [Mark(MarkType.SparseColumns)]
-        public string ColumnsDescription => Record.GetArrayString(Columns);
+        public string ColumnsDescription => Record<DataRecord>.GetArrayString(Columns);
 
         [Mark(MarkType.SparseColumnOffsets)]
-        public string OffsetsDescription => Record.GetArrayString(Offset);
+        public string OffsetsDescription => Record<DataRecord>.GetArrayString(Offset);
 
         public ushort[] Offset { get; set; }
 

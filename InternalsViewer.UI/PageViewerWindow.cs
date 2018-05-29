@@ -169,8 +169,6 @@ namespace InternalsViewer.UI
         /// <param name="offset">The offset.</param>
         private void LoadRecord(ushort offset)
         {
-            Record record = null;
-
             switch (Page.Header.PageType)
             {
                 case PageType.Data:
@@ -179,11 +177,11 @@ namespace InternalsViewer.UI
 
                     if (Page.CompressionType == CompressionType.None)
                     {
-                        record = new DataRecord(Page, offset, tableStructure);
+                        SetRecord(offset, new DataRecord(Page, offset, tableStructure));
                     }
                     else
                     {
-                        record = new CompressedDataRecord(Page, offset, tableStructure);
+                        SetRecord(offset, new CompressedDataRecord(Page, offset, tableStructure));
                     }
 
                     allocationViewer.Visible = false;
@@ -194,7 +192,7 @@ namespace InternalsViewer.UI
 
                     Structure indexStructure = new IndexStructure(Page.Header.AllocationUnitId, Page.Database);
 
-                    record = new IndexRecord(Page, offset, indexStructure);
+                    SetRecord(offset, new IndexRecord(Page, offset, indexStructure));
 
                     allocationViewer.Visible = false;
                     markerKeyTable.Visible = true;
@@ -228,16 +226,19 @@ namespace InternalsViewer.UI
                 case PageType.Lob3:
                 case PageType.Lob4:
 
-                    record = new BlobRecord(Page, offset);
+                    SetRecord(offset, new BlobRecord(Page, offset));
 
                     allocationViewer.Visible = false;
                     markerKeyTable.Visible = true;
                     break;
             }
+        }
 
+        private void SetRecord<T>(ushort offset, Record<T> record)
+        {
             if (record != null)
             {
-                var markers = MarkerBuilder.BuildMarkers((Markable)record);
+                var markers = MarkerBuilder.BuildMarkers((Markable<T>)record);
 
                 hexViewer.AddMarkers(markers);
 

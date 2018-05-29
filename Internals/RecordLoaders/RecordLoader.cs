@@ -38,25 +38,25 @@ namespace InternalsViewer.Internals.RecordLoaders
         /// <param name="offset">The offset.</param>
         public static void LoadLobField(RecordField field, byte[] data, int offset)
         {
-            field.Mark("BlobInlineRoot");
+            field.Mark(p => p.BlobInlineRoot);
 
             // First byte gives the Blob field type
             switch ((BlobFieldType)data[0])
             {
-                case BlobFieldType.LobPointer:
+                //case BlobFieldType.LobPointer:
 
-                    field.BlobInlineRoot = new PointerField(data, offset);
-                    break;
+                //    field.BlobInlineRoot = new PointerField(data, offset);
+                //    break;
 
-                case BlobFieldType.LobRoot:
+                //case BlobFieldType.LobRoot:
 
-                    field.BlobInlineRoot = new RootField(data, offset);
-                    break;
+                //    field.BlobInlineRoot = new RootField(data, offset);
+                //    break;
 
-                case BlobFieldType.RowOverflow:
+                //case BlobFieldType.RowOverflow:
 
-                    field.BlobInlineRoot = new OverflowField(data, offset);
-                    break;
+                //    field.BlobInlineRoot = new OverflowField(data, offset);
+                //    break;
             }
         }
 

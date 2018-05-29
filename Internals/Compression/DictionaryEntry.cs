@@ -5,7 +5,7 @@ using InternalsViewer.Internals.Records;
 
 namespace InternalsViewer.Internals.Compression
 {
-    public class DictionaryEntry: Markable
+    public class DictionaryEntry : Markable<DictionaryEntry>
     {
         public DictionaryEntry(byte[] data)
         {

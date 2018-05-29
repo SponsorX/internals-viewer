@@ -4,7 +4,7 @@ using System.Text;
 
 namespace InternalsViewer.Internals.BlobPointers
 {
-    public class Field: Markable
+    public class Field<T>: Markable<T>
     {
     }
 }

@@ -45,7 +45,7 @@ namespace InternalsViewer.Internals.RecordLoaders
 
                 record.VariableLengthColumnCount = BitConverter.ToUInt16(record.Page.PageData, varLengthColumnCountOffset);
 
-                record.Mark("VariableLengthColumnCount", varLengthColumnCountOffset, sizeof(short));
+                record.Mark(p => p.VariableLengthColumnCount, varLengthColumnCountOffset, sizeof(short));
             }
 
             LoadShortFields(record);
@@ -58,7 +58,7 @@ namespace InternalsViewer.Internals.RecordLoaders
                                                                     record.VariableLengthColumnCount,
                                                                     colArrayOffset);
 
-                record.Mark("ColOffsetArrayDescription", colArrayOffset, record.VariableLengthColumnCount * sizeof(short));
+                record.Mark(p => p.ColOffsetArrayDescription, colArrayOffset, record.VariableLengthColumnCount * sizeof(short));
             }
 
             var longStartPos = record.SlotOffset + 4 + record.ColumnCountBytes + cdArraySize + record.CompressedSize + (2 * record.VariableLengthColumnCount);
@@ -75,7 +75,7 @@ namespace InternalsViewer.Internals.RecordLoaders
             record.HasVariableLengthColumns = record.StatusBitsA[5];
             record.HasNullBitmap = record.StatusBitsA[4];
 
-            record.Mark("StatusBitsADescription", record.SlotOffset, sizeof(byte));
+            record.Mark(p => p.StatusBitsADescription, record.SlotOffset, sizeof(byte));
         }
 
         private static void LoadForwardingRecord(CompressedDataRecord record)
@@ -110,7 +110,7 @@ namespace InternalsViewer.Internals.RecordLoaders
             }
 
             // 1/2 byte int located after the status bits (1 byte)
-            record.Mark("ColumnCount", record.SlotOffset + sizeof(byte), record.ColumnCountBytes);
+            record.Mark(p => p.ColumnCount, record.SlotOffset + sizeof(byte), record.ColumnCountBytes);
 
             return columns;
         }
@@ -171,9 +171,9 @@ namespace InternalsViewer.Internals.RecordLoaders
                                                             });
                     }
 
-                    field.Mark("Value", field.Offset, field.Length);
+                    field.Mark(p => p.Value, field.Offset, field.Length);
 
-                    record.Mark("FieldsArray", field.Name, index);
+                    record.Mark(p => p.FieldsArray, field.Name, index);
 
                     index++;
 
@@ -219,10 +219,10 @@ namespace InternalsViewer.Internals.RecordLoaders
                     }
                     else
                     {
-                        field.Mark("Value", field.Offset, field.Length);
+                        field.Mark(p => p.Value, field.Offset, field.Length);
                     }
 
-                    record.Mark("FieldsArray", field.Name, record.Fields.Count - 1);
+                    record.Mark(p => p.FieldsArray, field.Name, record.Fields.Count - 1);
 
                     prevLength = DecodeOffset(record.ColOffsetArray[longColIndex]);
 
@@ -257,13 +257,13 @@ namespace InternalsViewer.Internals.RecordLoaders
 
             for (var i = 0; i < Math.Ceiling(record.ColumnCount / 2D); i++)
             {
-                record.Mark("CdItemsArray", "CD Array offset " + i, i);
+                record.Mark(p => p.CdItemsArray, "CD Array offset " + i, i);
 
                 var cdItem = Convert.ToByte(record.Page.PageData[record.SlotOffset + bytePos]);
 
                 var item = new CdArrayItem(i, cdItem);
 
-                item.Mark("Description", record.SlotOffset + bytePos, sizeof(byte));
+                item.Mark(p => p.Description, record.SlotOffset + bytePos, sizeof(byte));
 
                 record.CdItems.Add(item);
 

@@ -8,7 +8,7 @@ namespace InternalsViewer.Internals.Compression
     /// <summary>
     /// CD (Column Description) Array Item
     /// </summary>
-    public class CdArrayItem : Markable
+    public class CdArrayItem : Markable<CdArrayItem>
     {
         public CdArrayItem(int index, byte value)
         {

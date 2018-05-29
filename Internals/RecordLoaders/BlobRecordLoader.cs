@@ -18,23 +18,23 @@ namespace InternalsViewer.Internals.RecordLoaders
         {
             var statusByte = record.Page.PageData[record.SlotOffset];
 
-            record.Mark("StatusBitsADescription", record.SlotOffset, sizeof(byte));
+            record.Mark(p => p.StatusBitsADescription, record.SlotOffset, sizeof(byte));
 
             record.StatusBitsA = new BitArray(new byte[] { statusByte });
 
-            record.Mark("StatusBitsBDescription", record.SlotOffset + sizeof(byte), sizeof(byte));
+            record.Mark(p => p.StatusBitsBDescription, record.SlotOffset + sizeof(byte), sizeof(byte));
 
             record.RecordType = (RecordType)((statusByte >> 1) & 7);
 
-            record.Mark("Length", record.SlotOffset + BlobRecord.LengthOffset, sizeof(short));
+            record.Mark(p => p.Length, record.SlotOffset + BlobRecord.LengthOffset, sizeof(short));
 
             record.Length = BitConverter.ToInt16(record.Page.PageData, record.SlotOffset + BlobRecord.LengthOffset);
 
-            record.Mark("BlobId", record.SlotOffset + BlobRecord.IdOffset, sizeof(long));
+            record.Mark(p => p.BlobId, record.SlotOffset + BlobRecord.IdOffset, sizeof(long));
 
             record.BlobId = BitConverter.ToInt64(record.Page.PageData, record.SlotOffset + BlobRecord.IdOffset);
 
-            record.Mark("BlobTypeDescription", record.SlotOffset + BlobRecord.TypeOffset, sizeof(short));
+            record.Mark(p => p.BlobTypeDescription, record.SlotOffset + BlobRecord.TypeOffset, sizeof(short));
 
             record.BlobType = (BlobType)record.Page.PageData[record.SlotOffset + BlobRecord.TypeOffset];
 
@@ -63,21 +63,21 @@ namespace InternalsViewer.Internals.RecordLoaders
             BlobChildLink link;
             record.BlobChildren = new List<BlobChildLink>();
 
-            record.Mark("MaxLinks", record.SlotOffset + BlobRecord.MaxLinksOffset, sizeof(short));
+            record.Mark(p => p.MaxLinks, record.SlotOffset + BlobRecord.MaxLinksOffset, sizeof(short));
 
             record.MaxLinks = BitConverter.ToInt16(record.Page.PageData, record.SlotOffset + BlobRecord.MaxLinksOffset);
 
-            record.Mark("CurLinks", record.SlotOffset + BlobRecord.CurLinksOffset, sizeof(short));
+            record.Mark(p => p.CurLinks, record.SlotOffset + BlobRecord.CurLinksOffset, sizeof(short));
 
             record.CurLinks = BitConverter.ToInt16(record.Page.PageData, record.SlotOffset + BlobRecord.CurLinksOffset);
 
-            record.Mark("Level", record.SlotOffset + BlobRecord.RootLevelOffset, sizeof(short));
+            record.Mark(p => p.Level, record.SlotOffset + BlobRecord.RootLevelOffset, sizeof(short));
 
             record.Level = BitConverter.ToInt16(record.Page.PageData, record.SlotOffset + BlobRecord.RootLevelOffset);
 
             for (var i = 0; i < record.CurLinks; i++)
             {
-                record.Mark("BlobChildrenArray", "Child " + i.ToString() + " ", i);
+                record.Mark(p => p.BlobChildrenArray, "Child " + i.ToString() + " ", i);
 
                 if (record.BlobType == BlobType.LargeRoot)
                 {
@@ -94,13 +94,13 @@ namespace InternalsViewer.Internals.RecordLoaders
 
         private static void LoadSmallRoot(BlobRecord record)
         {
-            record.Mark("Size", record.SlotOffset + BlobRecord.MaxLinksOffset, sizeof(short));
+            record.Mark(p => p.Size, record.SlotOffset + BlobRecord.MaxLinksOffset, sizeof(short));
 
             record.Size = BitConverter.ToInt16(record.Page.PageData, record.SlotOffset + BlobRecord.MaxLinksOffset);
 
             record.Data = new byte[record.Size];
 
-            record.Mark("Data", record.SlotOffset + BlobRecord.SmallDataOffset, record.Size);
+            record.Mark(p => p.Data, record.SlotOffset + BlobRecord.SmallDataOffset, record.Size);
 
             Array.Copy(record.Page.PageData,
                        record.SlotOffset + BlobRecord.SmallDataOffset,
@@ -111,7 +111,7 @@ namespace InternalsViewer.Internals.RecordLoaders
 
         private static void LoadData(BlobRecord blobRecord)
         {
-            blobRecord.Mark("Data", blobRecord.SlotOffset + BlobRecord.DataOffset, blobRecord.Length);
+            blobRecord.Mark(p => p.Data, blobRecord.SlotOffset + BlobRecord.DataOffset, blobRecord.Length);
 
             blobRecord.Data = new byte[blobRecord.Length];
 
@@ -146,7 +146,7 @@ namespace InternalsViewer.Internals.RecordLoaders
 
             var offsetPosition =  record.SlotOffset + BlobRecord.RootChildOffset + (index * 12);
 
-            blobChildLink.Mark("Offset", offsetPosition, sizeof(int));
+            blobChildLink.Mark(p => p.Offset, offsetPosition, sizeof(int));
 
             var offset = BitConverter.ToInt32(record.Page.PageData, offsetPosition);
 
@@ -154,7 +154,7 @@ namespace InternalsViewer.Internals.RecordLoaders
 
             var rowIdPosition = record.SlotOffset + BlobRecord.RootChildOffset + (index * 12) + 4;
 
-            blobChildLink.Mark("RowIdentifier", rowIdPosition, 8);
+            blobChildLink.Mark(p => p.RowIdentifier, rowIdPosition, 8);
 
             Array.Copy(record.Page.PageData, rowIdPosition, rowData, 0, 8);
 

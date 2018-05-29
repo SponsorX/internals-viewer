@@ -3,7 +3,7 @@ using InternalsViewer.Internals.Records;
 
 namespace InternalsViewer.Internals.BlobPointers
 {
-    public class BlobChildLink : Markable
+    public class BlobChildLink : Markable<BlobChildLink>
     {
         public BlobChildLink()
         {

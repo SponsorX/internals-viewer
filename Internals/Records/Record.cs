@@ -10,7 +10,7 @@ namespace InternalsViewer.Internals.Records
     /// <summary>
     /// Database Record Stucture
     /// </summary>
-    public abstract class Record : Markable
+    public abstract class Record<T> : Markable<T>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Record"/> class.
@@ -113,7 +113,7 @@ namespace InternalsViewer.Internals.Records
             }
         }
 
-        internal static string GetStatusBitsDescription(Record record)
+        internal static string GetStatusBitsDescription(Record<T> record)
         {
             var statusDescription = string.Empty;
 

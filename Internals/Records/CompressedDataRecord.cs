@@ -8,7 +8,7 @@ using InternalsViewer.Internals.Pages;
 
 namespace InternalsViewer.Internals.Records
 {
-    public class CompressedDataRecord : Record
+    public class CompressedDataRecord : Record<CompressedDataRecord>
     {
         public CompressedDataRecord(Page page, ushort slotOffset, Structure structure)
             : base(page, slotOffset, structure)

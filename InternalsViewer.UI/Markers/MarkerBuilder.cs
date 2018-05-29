@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Reflection;
 using InternalsViewer.Internals;
 using InternalsViewer.Internals.Records;
@@ -12,7 +13,7 @@ namespace InternalsViewer.UI.Markers
     /// </summary>
     public class MarkerBuilder
     {
-        public static List<Marker> BuildMarkers(Markable markedObject)
+        public static List<Marker> BuildMarkers<T>(Markable<T> markedObject)
         {
             return BuildMarkers(markedObject, string.Empty);
         }
@@ -20,7 +21,7 @@ namespace InternalsViewer.UI.Markers
         /// <summary>
         /// Builds the markers using an IMarkable collection and reflection to access the property values
         /// </summary>
-        public static List<Marker> BuildMarkers(Markable markedObject, string prefix)
+        public static List<Marker> BuildMarkers<T>(Markable<T> markedObject, string prefix)
         {
             if (markedObject == null)
             {
@@ -37,7 +38,10 @@ namespace InternalsViewer.UI.Markers
 
                 SetMarkerPosition(item, marker);
 
-                var property = markedObject.GetType().GetProperty(item.PropertyName);
+                var member = (UnaryExpression)item.PropertyExpression.Body;
+                var x = member..Name;
+
+                var property = member.Member;
 
                 var markAttribute = property?.GetCustomAttributes(typeof(MarkAttribute), false);
 
@@ -66,21 +70,24 @@ namespace InternalsViewer.UI.Markers
                 }
                 else
                 {
-                    marker.Name = item.PropertyName;
+                    marker.Name = property.Name;
                 }
+
+                var p = markedObject.GetType().GetProperty(property.Name);
+
 
                 // Check if there is an index, if there is it indicates the property is an array
                 if (item.Index < 0)
                 {
-                    var value = property.GetValue(markedObject, null);
+                    var value = p.GetValue(markedObject, null);
 
-                    SetValue(markers, marker, value, prefix + item.Prefix);
+                    SetValue<T>(markers, marker, value, prefix + item.Prefix);
                 }
                 else
                 {
-                    var array = (object[])property.GetValue(markedObject, null);
+                    var array = (object[])p.GetValue(markedObject, null);
 
-                    SetValue(markers, marker, array[item.Index], prefix + item.Prefix);
+                    SetValue<T>(markers, marker, array[item.Index], prefix + item.Prefix);
                 }
 
                 if (item.StartPosition > 0)
@@ -99,7 +106,7 @@ namespace InternalsViewer.UI.Markers
         /// </summary>
         /// <param name="item">The item.</param>
         /// <param name="marker">The marker.</param>
-        private static void SetMarkerPosition(MarkItem item, Marker marker)
+        private static void SetMarkerPosition<T>(MarkItem<T> item, Marker marker)
         {
             marker.StartPosition = item.StartPosition;
 
@@ -117,9 +124,9 @@ namespace InternalsViewer.UI.Markers
         /// <summary>
         /// Sets the value for a marker, including recursively adding markers on marked properties
         /// </summary>
-        private static void SetValue(List<Marker> markers, Marker marker, object value, string prefix)
+        private static void SetValue<T>(List<Marker> markers, Marker marker, object value, string prefix)
         {
-            var markable = value as Markable;
+            var markable = value as Markable<T>;
 
             if (markable != null)
             {
