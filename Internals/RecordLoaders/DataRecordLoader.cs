@@ -243,7 +243,7 @@ namespace InternalsViewer.Internals.RecordLoaders
                         //TODO: Investigate this
                         field.Mark(p => p.Value, dataRecord.SlotOffset + field.Offset, field.Length);
                     }
-
+                    
                     dataRecord.Mark(p => p.FieldsArray, field.Name, index);
 
                     index++;
@@ -251,7 +251,7 @@ namespace InternalsViewer.Internals.RecordLoaders
                     columnValues.Add(field);
                 }
             }
-
+            
             dataRecord.Fields.AddRange(columnValues);
         }
 

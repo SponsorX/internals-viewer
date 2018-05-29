@@ -38,12 +38,9 @@ namespace InternalsViewer.UI.Markers
 
                 SetMarkerPosition(item, marker);
 
-                var member = item.PropertyExpression.Body as MemberExpression ?? ((UnaryExpression)item.PropertyExpression.Body).Operand as MemberExpression;
-                var x = member.Member.Name;
-
-                var property = member.Member;
-
-                var markAttribute = property?.GetCustomAttributes(typeof(MarkAttribute), false);
+                var member = GetMemberInfo(item.PropertyExpression);
+                
+                var markAttribute = member?.GetCustomAttributes(typeof(MarkAttribute), false);
 
                 if (markAttribute != null && markAttribute.Length > 0)
                 {
@@ -70,19 +67,19 @@ namespace InternalsViewer.UI.Markers
                 }
                 else
                 {
-                    marker.Name = property.Name;
+                    marker.Name = member.Name;
                 }
                 
+                var value = ((PropertyInfo)member).GetValue(markedObject);
+
                 // Check if there is an index, if there is it indicates the property is an array
                 if (item.Index < 0)
                 {
-                    var value = member.GetValue(markedObject, null);
-
                     SetValue<T>(markers, marker, value, prefix + item.Prefix);
                 }
                 else
                 {
-                    var array = (object[])p.GetValue(markedObject, null);
+                    var array = (object[])value;
 
                     SetValue<T>(markers, marker, array[item.Index], prefix + item.Prefix);
                 }
@@ -142,6 +139,24 @@ namespace InternalsViewer.UI.Markers
                     marker.DataType = MarkerType.PageAddress;
                 }
             }
+        }
+
+        private static MemberInfo GetMemberInfo(Expression expression)
+        {
+            LambdaExpression lambda = (LambdaExpression)expression;
+            MemberExpression memberExpression = null;
+
+            switch (lambda.Body.NodeType)
+            {
+                case ExpressionType.Convert:
+                    memberExpression =
+                        ((UnaryExpression)lambda.Body).Operand as MemberExpression;
+                    break;
+                case ExpressionType.MemberAccess:
+                    memberExpression = lambda.Body as MemberExpression;
+                    break;
+            }
+            return memberExpression.Member;
         }
     }
 }
