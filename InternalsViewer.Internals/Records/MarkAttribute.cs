@@ -20,7 +20,7 @@ namespace InternalsViewer.Internals.Records
         {
             MarkType = markType;
         }
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MarkAttribute"/> class.
         /// </summary>
@@ -29,9 +29,7 @@ namespace InternalsViewer.Internals.Records
             MarkType = markType;
             Description = description;
         }
-
-
-
+        
         /// <summary>
         /// Gets or sets a value indicating whether this <see cref="MarkAttribute"/> is visible.
         /// </summary>
