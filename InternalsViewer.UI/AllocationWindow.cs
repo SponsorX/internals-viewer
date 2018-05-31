@@ -33,7 +33,7 @@ namespace InternalsViewer.UI
 
             extentSizeToolStripComboBox.SelectedIndex = 0;
         }
-        
+
         /// <summary>
         /// Enables buttons on the toolbar.
         /// </summary>
