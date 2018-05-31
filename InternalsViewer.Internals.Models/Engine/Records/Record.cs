@@ -8,7 +8,7 @@ using InternalsViewer.Internals.Models.Metadata;
 namespace InternalsViewer.Internals.Models.Engine.Records
 {
     /// <summary>
-    /// Database Record Stucture
+    /// DatabaseContainer Record Stucture
     /// </summary>
     public abstract class Record : Markable
     {

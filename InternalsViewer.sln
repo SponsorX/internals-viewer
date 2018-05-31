@@ -18,13 +18,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{22E8DA51
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InternalsViewer.Internals", "InternalsViewer.Internals\InternalsViewer.Internals.csproj", "{90F9F46A-DFA3-4F98-B6BF-8E2F087DD8A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InternalsViewer.Tests.Internals.UnitTests", "InternalsViewer.Tests.Internals.UnitTests\InternalsViewer.Tests.Internals.UnitTests.csproj", "{D125868C-6DAF-4EBF-8D1B-1E2E555017CB}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InternalsViewer.Internals.Models", "InternalsViewer.Internals.Models\InternalsViewer.Internals.Models.csproj", "{A86E4F75-BCD8-4BD7-B010-9D60B7B79C1A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Addin", "Addin", "{461C4472-D98E-4E4A-931B-D40BCA5368B3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InternalsViewer.Internals.Engine", "InternalsViewer.Internals.Engine\InternalsViewer.Internals.Engine.csproj", "{D7A8E1F7-6C54-45B6-A18C-271EAFDC4CEF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PreviousVersion", "PreviousVersion", "{E2F17D1A-8343-4A35-ABAB-E91F2C04CA45}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InternalsViewer.Tests.Internals.Engine.UnitTests", "InternalsViewer.Tests.Internals.Engine.UnitTests\InternalsViewer.Tests.Internals.Engine.UnitTests.csproj", "{683D83A3-7CB8-4DD4-AEBE-DACA5E74675D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -60,12 +62,6 @@ Global
 		{90F9F46A-DFA3-4F98-B6BF-8E2F087DD8A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90F9F46A-DFA3-4F98-B6BF-8E2F087DD8A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90F9F46A-DFA3-4F98-B6BF-8E2F087DD8A8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D125868C-6DAF-4EBF-8D1B-1E2E555017CB}.Debug (v2008)|Any CPU.ActiveCfg = Debug|Any CPU
-		{D125868C-6DAF-4EBF-8D1B-1E2E555017CB}.Debug (v2008)|Any CPU.Build.0 = Debug|Any CPU
-		{D125868C-6DAF-4EBF-8D1B-1E2E555017CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D125868C-6DAF-4EBF-8D1B-1E2E555017CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D125868C-6DAF-4EBF-8D1B-1E2E555017CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D125868C-6DAF-4EBF-8D1B-1E2E555017CB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A86E4F75-BCD8-4BD7-B010-9D60B7B79C1A}.Debug (v2008)|Any CPU.ActiveCfg = Debug|Any CPU
 		{A86E4F75-BCD8-4BD7-B010-9D60B7B79C1A}.Debug (v2008)|Any CPU.Build.0 = Debug|Any CPU
 		{A86E4F75-BCD8-4BD7-B010-9D60B7B79C1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -78,17 +74,25 @@ Global
 		{D7A8E1F7-6C54-45B6-A18C-271EAFDC4CEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D7A8E1F7-6C54-45B6-A18C-271EAFDC4CEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D7A8E1F7-6C54-45B6-A18C-271EAFDC4CEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{683D83A3-7CB8-4DD4-AEBE-DACA5E74675D}.Debug (v2008)|Any CPU.ActiveCfg = Debug|Any CPU
+		{683D83A3-7CB8-4DD4-AEBE-DACA5E74675D}.Debug (v2008)|Any CPU.Build.0 = Debug|Any CPU
+		{683D83A3-7CB8-4DD4-AEBE-DACA5E74675D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{683D83A3-7CB8-4DD4-AEBE-DACA5E74675D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{683D83A3-7CB8-4DD4-AEBE-DACA5E74675D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{683D83A3-7CB8-4DD4-AEBE-DACA5E74675D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{F9CE00A7-4C8D-4C8B-85F1-CD1AA3D1386D} = {E2F17D1A-8343-4A35-ABAB-E91F2C04CA45}
 		{A361B0BB-4F30-46C3-8C87-E50F6528E10C} = {461C4472-D98E-4E4A-931B-D40BCA5368B3}
 		{258C3F3E-6E1D-416D-B498-0EF1FE749ED2} = {22E8DA51-0EF6-4CEA-9053-6D49F4EF3F99}
-		{D125868C-6DAF-4EBF-8D1B-1E2E555017CB} = {22E8DA51-0EF6-4CEA-9053-6D49F4EF3F99}
+		{90F9F46A-DFA3-4F98-B6BF-8E2F087DD8A8} = {E2F17D1A-8343-4A35-ABAB-E91F2C04CA45}
+		{683D83A3-7CB8-4DD4-AEBE-DACA5E74675D} = {22E8DA51-0EF6-4CEA-9053-6D49F4EF3F99}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		VisualSVNWorkingCopyRoot = 
 		SolutionGuid = {12A1406C-1C68-4A7F-A0FF-E4E7A65AECAE}
+		VisualSVNWorkingCopyRoot = 
 	EndGlobalSection
 EndGlobal

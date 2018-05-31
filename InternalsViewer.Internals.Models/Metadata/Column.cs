@@ -3,7 +3,7 @@
 namespace InternalsViewer.Internals.Models.Metadata
 {
     /// <summary>
-    /// Database Index or Table column
+    /// DatabaseContainer Index or Table column
     /// </summary>
     public class Column
     {
@@ -32,13 +32,13 @@ namespace InternalsViewer.Internals.Models.Metadata
         public override string ToString()
         {
             return string.Format("Column: {0,-40} Column ID: {1,-5} Data Type: {2,-20} Data Length: {3, -5} Leaf Offset {4,-5} Precision {5,-5} Scale {6,-5}",
-                                  ColumnName,
-                                  ColumnId,
-                                  DataType,
-                                  DataLength,
-                                  LeafOffset,
-                                  Precision,
-                                  Scale);
+                                 ColumnName,
+                                 ColumnId,
+                                 DataType,
+                                 DataLength,
+                                 LeafOffset,
+                                 Precision,
+                                 Scale);
         }
     }
 }

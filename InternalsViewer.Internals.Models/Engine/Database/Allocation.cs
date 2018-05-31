@@ -9,7 +9,7 @@ namespace InternalsViewer.Internals.Models.Engine.Database
     /// </summary>
     public class Allocation
     {
-        public List<AllocationPage> Pages { get; } = new List<AllocationPage>();
+        public List<AllocationMapPage> Pages { get; } = new List<AllocationMapPage>();
 
         public List<PageAddress> SinglePageSlots { get; set; } = new List<PageAddress>();
 

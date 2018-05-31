@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using InternalsViewer.Internals.Models.Engine.Address;
 using InternalsViewer.Internals.Models.Engine.Compression;
+using InternalsViewer.Internals.Models.Engine.Database;
 using InternalsViewer.Internals.Models.Marking;
 
 namespace InternalsViewer.Internals.Models.Engine.Pages
 {
     /// <summary>
-    /// Database Page
+    /// Page
     /// </summary>
     public class Page : Markable
     {
@@ -14,15 +15,11 @@ namespace InternalsViewer.Internals.Models.Engine.Pages
 
         public CompressionType CompressionType { get; set; }
 
-        public string DatabaseName { get; set; }
-
-        public Database.Database Database { get; set; }
+        public DatabaseContainer DatabaseContainer { get; set; }
 
         public PageAddress PageAddress { get; set; }
 
-        public int DatabaseId { get; set; }
-
-        public byte[] PageData { get; set; }
+        public byte[] Data { get; set; }
 
         public Header Header { get; set; }
 

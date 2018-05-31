@@ -154,33 +154,11 @@ namespace InternalsViewer.Internals.Engine.Database
             }
         }
 
-        public DataTable Tables()
-        {
-            var sqlCommand = Properties.Resources.SQL_Database_Tables;
-
-            return DataAccess.GetDataTable(ConnectionString, sqlCommand, Name, "Tables", CommandType.Text);
-        }
-
         public DataTable AllocationUnits()
         {
             var sqlCommand = Properties.Resources.SQL_Allocation_Units;
 
             return DataAccess.GetDataTable(ConnectionString, sqlCommand, Name, "Tables", CommandType.Text);
-        }
-
-        public DataTable TableInfo(int objectId)
-        {
-            return DataAccess.GetDataTable(ConnectionString,
-                                           Properties.Resources.SQL_Table_Info,
-                                           Name,
-                                           "Tables",
-                                           CommandType.Text,
-                                           new SqlParameter[1] { new SqlParameter("object_id", objectId) });
-        }
-
-        public DataTable TableColumns(int objectId)
-        {
-            return null;
         }
 
         internal int GetSize(DatabaseFile databaseFile)

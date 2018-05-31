@@ -5,18 +5,6 @@ namespace InternalsViewer.Internals.Models.Engine.Database
 {
     public class PfsByte
     {
-        public PfsByte(byte pageByte)
-        {
-            var bitArray = new BitArray(new [] { pageByte });
-
-            GhostRecords = bitArray[3];
-            Iam = bitArray[4];
-            Mixed = bitArray[5];
-            Allocated = bitArray[6];
-
-            PageSpaceFree = (SpaceFree)(pageByte & 7);
-        }
-
         public SpaceFree PageSpaceFree { get; set; }
 
         public bool GhostRecords { get; set; }

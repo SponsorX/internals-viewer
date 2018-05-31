@@ -5,16 +5,16 @@ namespace InternalsViewer.Internals.Models.Engine.Database
 {
     public class Pfs
     {
-        private readonly List<PfsPage> pfsPages;
+        public List<PfsPage> Pages;
 
-        public Pfs(PfsPage page)
+        public Pfs()
         {
-            pfsPages = new List<PfsPage> { page };
+            Pages = new List<PfsPage> {  };
         }
 
         public PfsByte PagePfsByte(int page)
         {
-            return pfsPages[page / Database.PfsInterval].PfsBytes[page % Database.PfsInterval];
+            return Pages[page / DatabaseContainer.PfsInterval].PfsBytes[page % DatabaseContainer.PfsInterval];
         }
     }
 }
