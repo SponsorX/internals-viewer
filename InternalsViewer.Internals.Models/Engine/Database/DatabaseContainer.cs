@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using InternalsViewer.Internals.Models.Engine.Allocations;
 using InternalsViewer.Internals.Models.Metadata;
 
 namespace InternalsViewer.Internals.Models.Engine.Database
@@ -12,15 +13,17 @@ namespace InternalsViewer.Internals.Models.Engine.Database
 
         public string Name { get; set; }
 
-        public Dictionary<int, Allocation> Gam { get; set; }
+        public Dictionary<int, Allocation> Gam { get; set; } = new Dictionary<int, Allocation>();
 
-        public Dictionary<int, Allocation> SGam { get; set; }
+        public Dictionary<int, Allocation> SGam { get; set; } = new Dictionary<int, Allocation>();
 
-        public Dictionary<int, Allocation> Dcm { get; set; }
+        public Dictionary<int, Allocation> Dcm { get; set; } = new Dictionary<int, Allocation>();
 
-        public Dictionary<int, Allocation> Bcm { get; set; }
+        public Dictionary<int, Allocation> Bcm { get; set; } = new Dictionary<int, Allocation>();
 
-        public Dictionary<int, Pfs> Pfs { get; set; }
+        public Dictionary<int, PageFreeSpace> Pfs { get; set; } = new Dictionary<int, PageFreeSpace>();
+
+        public IEnumerable<AllocationUnit> AllocationUnits = new List<AllocationUnit>();
 
         public IEnumerable<File> Files { get; set; }
 

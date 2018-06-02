@@ -2,6 +2,7 @@
 using System.Data;
 using System.Data.SqlClient;
 using InternalsViewer.Internals.Engine.Address;
+using InternalsViewer.Internals.Metadata;
 
 namespace InternalsViewer.Internals.Engine.Database
 {

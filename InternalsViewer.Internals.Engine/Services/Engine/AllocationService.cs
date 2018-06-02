@@ -9,6 +9,7 @@ using InternalsViewer.Internals.Engine.Interfaces.Services.Engine;
 using InternalsViewer.Internals.Engine.Parsers;
 using InternalsViewer.Internals.Engine.Parsers.PageParsers;
 using InternalsViewer.Internals.Models.Engine.Address;
+using InternalsViewer.Internals.Models.Engine.Allocations;
 using InternalsViewer.Internals.Models.Engine.Database;
 using InternalsViewer.Internals.Models.Engine.Pages;
 

@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using InternalsViewer.Internals;
 using InternalsViewer.Internals.Engine.Address;
 using InternalsViewer.Internals.Engine.Database;
+using InternalsViewer.Internals.Metadata;
 using InternalsViewer.Internals.Pages;
 
 namespace InternalsViewer.UI.Allocations

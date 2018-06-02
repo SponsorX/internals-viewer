@@ -4,16 +4,16 @@ using InternalsViewer.Internals.Models.Engine.Pages;
 
 namespace InternalsViewer.Internals.Engine.Parsers.PageParsers
 {
-    public class PfsParser : IPageParser<PfsPage>
+    public class PfsParser : IPageParser<PageFreeSpacePage>
     {
-        public PfsPage Parse(RawPage page)
+        public PageFreeSpacePage Parse(RawPage page)
         {
             if (page.Header.PageType != PageType.Pfs)
             {
-                throw new InvalidOperationException($"Page is not a PFS page - {page.Header.PageType}");
+                throw new InvalidOperationException($"Page is not a PFS pageFreeSpacePage - {page.Header.PageType}");
             }
 
-            var pfsPage = new PfsPage
+            var pfsPage = new PageFreeSpacePage
             {
                 Header = page.Header,
                 Data = page.Data
@@ -27,15 +27,15 @@ namespace InternalsViewer.Internals.Engine.Parsers.PageParsers
         /// <summary>
         /// Loads the PFS bytes collection
         /// </summary>
-        private static void LoadPfsBytes(PfsPage page)
+        private static void LoadPfsBytes(PageFreeSpacePage pageFreeSpacePage)
         {
-            var pfsData = new byte[PfsPage.PfsSize];
+            var pfsData = new byte[PageFreeSpacePage.PfsSize];
 
-            Array.Copy(page.Data, PfsPage.PfsOffset, pfsData, 0, PfsPage.PfsSize);
+            Array.Copy(pageFreeSpacePage.Data, PageFreeSpacePage.PfsOffset, pfsData, 0, PageFreeSpacePage.PfsSize);
 
             foreach (var pfsByte in pfsData)
             {
-                page.PfsBytes.Add(PfsByteParser.Parse(pfsByte));
+                pageFreeSpacePage.PfsBytes.Add(PfsByteParser.Parse(pfsByte));
             }
         }
     }

@@ -72,13 +72,13 @@ namespace InternalsViewer.Internals.Engine.Properties {
         /// <summary>
         ///   Looks up a localized string similar to SELECT o.object_id                          AS ObjectId
         ///	  ,iau.first_iam_page                   AS FirstIamPage
-        ///      ,s.name                               AS SchemaName
-        ///	  ,o.name                               AS TableName
-        ///      ,i.name                               AS IndexName
+        ///      ,s.name                               AS SchemaFilePath
+        ///	  ,o.name                               AS TableFilePath
+        ///      ,i.name                               AS IndexFilePath
         ///	  ,is_ms_shipped                        AS IsSystem
         ///      ,p.index_id                           AS IndexId
         ///      ,i.type                               AS IndexType
-        ///      ,iau.type                             AS Allocation [rest of string was truncated]&quot;;.
+        ///      ,iau.type                             A [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Sql_Metadata_AllocationUnits {
             get {
@@ -96,20 +96,19 @@ namespace InternalsViewer.Internals.Engine.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT df.file_id                          AS FileId
+        ///   Looks up a localized string similar to SELECT d.database_id                       AS DatabaseId
+        ///      ,d.name                              AS Name
+        ///      ,d.compatibility_level               AS CompatabilityLevel
+        ///      ,df.file_id                          AS FileId
         ///      ,df.type                             AS FileType
         ///      ,fg.name                             AS [FileGroup]
-        ///      ,df.name                             AS [Name]
-        ///      ,physical_name                       AS PhysicalName
-        ///      ,size                                AS Size
-        ///      ,fsu.total_page_count / 8            AS TotalExtents
-        ///      ,fsu.allocated_extent_page_count / 8 AS UsedExtents
-        ///FROM   sys.database_files df
-        ///       INNER JOIN sys.filegr [rest of string was truncated]&quot;;.
+        ///      ,df.name                             AS [FilePath]
+        ///      ,physical_name                       AS PhysicalFilePath
+        ///      ,size                                AS [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string Sql_Metadata_Files {
+        internal static string Sql_Metadata_Database {
             get {
-                return ResourceManager.GetString("Sql_Metadata_Files", resourceCulture);
+                return ResourceManager.GetString("Sql_Metadata_Database", resourceCulture);
             }
         }
         

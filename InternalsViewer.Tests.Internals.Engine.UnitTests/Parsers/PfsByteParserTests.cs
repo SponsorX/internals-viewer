@@ -1,4 +1,5 @@
 ﻿using InternalsViewer.Internals.Engine.Parsers;
+using InternalsViewer.Internals.Models.Engine.Allocations;
 using InternalsViewer.Internals.Models.Engine.Database;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

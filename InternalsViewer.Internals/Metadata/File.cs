@@ -1,5 +1,8 @@
 ﻿
-namespace InternalsViewer.Internals.Engine.Database
+using System.Collections.Generic;
+using InternalsViewer.Internals.Engine.Database;
+
+namespace InternalsViewer.Internals.Metadata
 {
     public class DatabaseFile
     {

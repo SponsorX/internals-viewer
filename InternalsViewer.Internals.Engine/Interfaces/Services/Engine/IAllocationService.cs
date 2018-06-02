@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using System.Threading.Tasks;
 using InternalsViewer.Internals.Models.Engine.Address;
+using InternalsViewer.Internals.Models.Engine.Allocations;
 using InternalsViewer.Internals.Models.Engine.Database;
 
 namespace InternalsViewer.Internals.Engine.Interfaces.Services.Engine

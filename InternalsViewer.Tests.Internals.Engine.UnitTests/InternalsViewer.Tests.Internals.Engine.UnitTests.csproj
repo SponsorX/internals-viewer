@@ -61,6 +61,9 @@
     <Compile Include="Readers\Headers\FileHeaderReaderUnitTests.cs" />
     <Compile Include="Readers\Pages\DatabasePageReaderUnitTests.cs" />
     <Compile Include="Readers\Pages\FilePageReaderUnitTests.cs" />
+    <Compile Include="Services\Engine\AllocationServiceTests.cs" />
+    <Compile Include="Readers\Pages\TestFileReader.cs" />
+    <Compile Include="Services\Engine\DatabaseServiceTests.cs" />
     <Compile Include="Services\Metadata\MetadataServiceUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

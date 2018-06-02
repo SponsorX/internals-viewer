@@ -8,25 +8,31 @@ namespace InternalsViewer.Internals.Engine.Services.Engine
 {
     public class DatabaseService
     {
-        public DatabaseService(IMetadataService metadataService, IAllocationService allocationService)
+        public DatabaseService(IMetadataService metadataService,
+                               IAllocationService allocationService,
+                               IPageFreeSpaceService pageFreeSpaceService)
         {
             MetadataService = metadataService;
             AllocationService = allocationService;
+            PageFreeSpaceService = pageFreeSpaceService;
         }
 
         public IMetadataService MetadataService { get; set; }
 
         public IAllocationService AllocationService { get; set; }
 
-        public PfsService PfsService { get; set; }
+        public IPageFreeSpaceService PageFreeSpaceService { get; set; }
 
         public async Task<DatabaseContainer> GetDatabase(int databaseId)
         {
+            var databaseInfo = await MetadataService.GetDatabase();
+
             var database = new DatabaseContainer
             {
                 DatabaseId = databaseId,
-                Files = await MetadataService.GetFiles(),
-                CompatibilityLevel = await MetadataService.GetCompatabilityLevel()
+                Files = databaseInfo.Files,
+                CompatibilityLevel = databaseInfo.CompatabilityLevel,
+                AllocationUnits =  await MetadataService.GetAllocationUnits()
             };
 
             await LoadAllocations(database);
@@ -60,7 +66,7 @@ namespace InternalsViewer.Internals.Engine.Services.Engine
         {
             foreach (var file in database.Files)
             {
-                var pfs = await PfsService.GetPfs(database.DatabaseId, file.Size, file.FileId);
+                var pfs = await PageFreeSpaceService.GetPfs(database.DatabaseId, file.Size, file.FileId);
 
                 database.Pfs.Add(file.FileId, pfs);
             }

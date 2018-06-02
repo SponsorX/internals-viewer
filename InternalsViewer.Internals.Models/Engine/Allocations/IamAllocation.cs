@@ -1,4 +1,4 @@
-﻿namespace InternalsViewer.Internals.Models.Engine.Database
+﻿namespace InternalsViewer.Internals.Models.Engine.Allocations
 {
     /// <summary>
     /// An IAM allocation structure

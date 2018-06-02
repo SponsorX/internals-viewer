@@ -86,7 +86,8 @@
     <Compile Include="Compression\DictionaryEntry.cs" />
     <Compile Include="DataAccess.cs" />
     <Compile Include="Engine\Database\Database.cs" />
-    <Compile Include="Engine\Database\DatabaseFile.cs" />
+    <Compile Include="Metadata\Database.cs" />
+    <Compile Include="Metadata\File.cs" />
     <Compile Include="DataConverter.cs" />
     <Compile Include="Engine\Database\IamAllocation.cs" />
     <Compile Include="IndexTypes.cs" />

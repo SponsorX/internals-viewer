@@ -34,6 +34,24 @@ Allocation Status
 GAM (1:2) = ALLOCATED               SGAM (1:3) = NOT ALLOCATED          PFS (1:1) = 0x44 ALLOCATED 100_PCT_FULL
 DIFF (1:6) = CHANGED                ML (1:7) = NOT MIN_LOGGED
 
+
+
+(1:0)        - (1:336)      =     CHANGED
+(1:344)      -              = NOT CHANGED
+(1:352)      -              =     CHANGED
+(1:360)      -              = NOT CHANGED
+(1:368)      - (1:416)      =     CHANGED
+(1:424)      - (1:440)      = NOT CHANGED
+(1:448)      - (1:512)      =     CHANGED
+(1:520)      -              = NOT CHANGED
+(1:528)      -              =     CHANGED
+(1:536)      - (1:552)      = NOT CHANGED
+(1:560)      - (1:576)      =     CHANGED
+(1:584)      -              = NOT CHANGED
+(1:592)      -              =     CHANGED
+(1:600)      - (1:616)      = NOT CHANGED
+(1:624)      - (1:680)      =     CHANGED
+(1:688)      - (1:1016)     = NOT CHANGED
 DATA:
 
 

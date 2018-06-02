@@ -119,10 +119,10 @@
   </resheader>
   <data name="Sql_Metadata_AllocationUnits" xml:space="preserve">
     <value>SELECT o.object_id                          AS ObjectId
-	  ,iau.first_iam_mapPage                   AS FirstIamPage
-      ,s.name                               AS SchemaName
-	  ,o.name                               AS TableName
-      ,i.name                               AS IndexName
+	  ,iau.first_iam_page                   AS FirstIamPage
+      ,s.name                               AS SchemaFilePath
+	  ,o.name                               AS TableFilePath
+      ,i.name                               AS IndexFilePath
 	  ,is_ms_shipped                        AS IsSystem
       ,p.index_id                           AS IndexId
       ,i.type                               AS IndexType
@@ -132,8 +132,8 @@
 			WHEN 2 THEN 'LOB Data'
 			WHEN 3 THEN 'Row Overflow Data'
 	   END                                  AS AllocationUnitTypeDescription
-      ,iau.used_mapPages                       AS UsedPages
-      ,iau.total_mapPages                      AS TotalPages
+      ,iau.used_pages                       AS UsedPages
+      ,iau.total_pages                      AS TotalPages
 FROM   sys.all_objects o
 	   INNER JOIN sys.schemas s    ON o.schema_id = s.schema_id 
 	   INNER JOIN sys.partitions p ON p.object_id = o.object_id
@@ -147,18 +147,22 @@ ORDER BY is_ms_shipped DESC
   <data name="Sql_Metadata_CompatabilityLevel" xml:space="preserve">
     <value>SELECT compatibility_level FROM sys.databases WHERE name = 'master'</value>
   </data>
-  <data name="Sql_Metadata_Files" xml:space="preserve">
-    <value>SELECT df.file_id                          AS FileId
+  <data name="Sql_Metadata_Database" xml:space="preserve">
+    <value>SELECT d.database_id                       AS DatabaseId
+      ,d.name                              AS Name
+      ,d.compatibility_level               AS CompatabilityLevel
+      ,df.file_id                          AS FileId
       ,df.type                             AS FileType
       ,fg.name                             AS [FileGroup]
-      ,df.name                             AS [Name]
-      ,physical_name                       AS PhysicalName
+      ,df.name                             AS [FilePath]
+      ,physical_name                       AS PhysicalFilePath
       ,size                                AS Size
-      ,fsu.total_mapPage_count / 8            AS TotalExtents
-      ,fsu.allocated_extent_mapPage_count / 8 AS UsedExtents
-FROM   sys.database_files df
+      ,fsu.total_page_count / 8            AS TotalExtents
+      ,fsu.allocated_extent_page_count / 8 AS UsedExtents
+FROM   sys.databases d
+       INNER JOIN sys.master_files df            ON df.database_id = d.database_id
        INNER JOIN sys.filegroups fg              ON df.data_space_id = fg.data_space_id
-       INNER JOIN sys.dm_db_file_space_usage fsu ON df.file_id       = fsu.file_id
+       INNER JOIN sys.dm_db_file_space_usage fsu ON df.file_id       = fsu.file_id AND fsu.database_id = d.database_id
 WHERE  df.[type] = 0</value>
   </data>
   <data name="Sql_Metadata_FileSize" xml:space="preserve">

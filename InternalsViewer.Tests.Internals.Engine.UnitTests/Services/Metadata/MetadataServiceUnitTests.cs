@@ -11,13 +11,13 @@ namespace InternalsViewer.Tests.Internals.Engine.UnitTests.Services.Metadata
     public class MetadataServiceUnitTests
     {
         [TestMethod]
-        public async Task Can_Get_Files()
+        public async Task Can_Get_Database()
         {
             var service = CreateService();
 
-            var result = await service.GetFiles();
+            var result = await service.GetDatabase();
 
-            Assert.IsTrue(result.Any());
+            Assert.AreEqual(result.Name, "aaa");
         }
 
         public static MetadataService CreateService()

@@ -70,7 +70,8 @@
     <Compile Include="Services\Engine\DatabaseService.cs" />
     <Compile Include="Interfaces\Services\Metadata\IMetadataService.cs" />
     <Compile Include="Interfaces\Services\Engine\IAllocationService.cs" />
-    <Compile Include="Services\Engine\PfsService.cs" />
+    <Compile Include="Interfaces\Services\Engine\IPageFreeSpaceService.cs" />
+    <Compile Include="Services\Engine\PageFreeSpaceService.cs" />
     <Compile Include="Services\Metadata\MetadataService.cs" />
   </ItemGroup>
   <ItemGroup>

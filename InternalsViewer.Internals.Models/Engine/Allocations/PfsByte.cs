@@ -1,7 +1,5 @@
 ﻿
-using System.Collections;
-
-namespace InternalsViewer.Internals.Models.Engine.Database
+namespace InternalsViewer.Internals.Models.Engine.Allocations
 {
     public class PfsByte
     {

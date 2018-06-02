@@ -13,7 +13,7 @@ namespace InternalsViewer.Internals.Engine.Interfaces.Services.Metadata
 
         Task<byte> GetCompatabilityLevel();
 
-        Task<IEnumerable<File>> GetFiles();
+        Task<Database> GetDatabase();
 
         Task<int> GetFileSize(int fileId);
     }

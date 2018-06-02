@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
 using InternalsViewer.Internals.Engine.Data.TypeMappers;
@@ -19,9 +20,17 @@ namespace InternalsViewer.Internals.Engine.Services.Metadata
             SqlMapper.AddTypeHandler(PageAddressTypeMapper.Default);
         }
 
-        public Task<IEnumerable<File>> GetFiles()
+        public  async Task<Database> GetDatabase()
         {
-            return Connection.QueryAsync<File>(Properties.Resources.Sql_Metadata_Files);
+            var result = await Connection.QueryAsync<Database, File[], Database>(Properties.Resources.Sql_Metadata_Database,
+                (database, file) =>
+                {
+                    database.Files = file;
+
+                    return database;
+                }, splitOn: "FileId");
+
+            return result.FirstOrDefault();
         }
 
         public Task<IEnumerable<AllocationUnit>> GetAllocationUnits()

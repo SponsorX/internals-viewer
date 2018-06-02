@@ -29,12 +29,16 @@ namespace InternalsViewer.Internals.Engine.Readers.Pages
 
             var headerData = new Dictionary<string, string>();
 
+            if (Connection.State != ConnectionState.Open)
+            {
+                Connection.Open();
+            }
+
             var command = new SqlCommand(pageCommand, (SqlConnection)Connection)
             {
                 CommandType = CommandType.Text
             };
 
-            Connection.Open();
             var reader = await command.ExecuteReaderAsync();
 
             if (reader.HasRows)
@@ -57,6 +61,7 @@ namespace InternalsViewer.Internals.Engine.Readers.Pages
             }
 
             command.Dispose();
+            Connection.Close();
 
             return GetRawPage(data, headerData);
         }
