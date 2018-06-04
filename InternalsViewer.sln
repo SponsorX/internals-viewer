@@ -44,7 +44,6 @@ Global
 		{A361B0BB-4F30-46C3-8C87-E50F6528E10C}.Debug (v2008)|Any CPU.ActiveCfg = Debug|Any CPU
 		{A361B0BB-4F30-46C3-8C87-E50F6528E10C}.Debug (v2008)|Any CPU.Build.0 = Debug|Any CPU
 		{A361B0BB-4F30-46C3-8C87-E50F6528E10C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A361B0BB-4F30-46C3-8C87-E50F6528E10C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A361B0BB-4F30-46C3-8C87-E50F6528E10C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A361B0BB-4F30-46C3-8C87-E50F6528E10C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{258C3F3E-6E1D-416D-B498-0EF1FE749ED2}.Debug (v2008)|Any CPU.ActiveCfg = Debug|Any CPU
@@ -92,7 +91,7 @@ Global
 		{683D83A3-7CB8-4DD4-AEBE-DACA5E74675D} = {22E8DA51-0EF6-4CEA-9053-6D49F4EF3F99}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {12A1406C-1C68-4A7F-A0FF-E4E7A65AECAE}
 		VisualSVNWorkingCopyRoot = 
+		SolutionGuid = {12A1406C-1C68-4A7F-A0FF-E4E7A65AECAE}
 	EndGlobalSection
 EndGlobal

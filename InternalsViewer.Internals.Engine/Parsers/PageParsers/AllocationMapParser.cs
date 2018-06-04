@@ -16,7 +16,6 @@ namespace InternalsViewer.Internals.Engine.Parsers.PageParsers
                 case PageType.Sgam:
                 case PageType.Dcm:
                 case PageType.Bcm:
-                case PageType.Iam:
                     return true;
                 default:
                     return false;
@@ -34,7 +33,6 @@ namespace InternalsViewer.Internals.Engine.Parsers.PageParsers
                 Header = page.Header,
                 StartPage = new PageAddress(page.Header.PageAddress.FileId, 0)
             };
-
 
             ParseAllocationMap(allocationPage);
 
@@ -55,7 +53,5 @@ namespace InternalsViewer.Internals.Engine.Parsers.PageParsers
 
             bitArray.CopyTo(allocationMapPage.AllocationMap, 0);
         }
-
-
     }
 }

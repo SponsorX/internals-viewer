@@ -5,17 +5,13 @@ using InternalsViewer.Internals.Models.Engine.Pages;
 namespace InternalsViewer.Internals.Models.Engine.Allocations
 {
     /// <summary>
-    /// An Allocation structure represented by a collection of allocation pages separated by an interval
+    /// An Allocation structure represented by a collection of allocation pages (bitmaps) separated by an interval
     /// </summary>
-    public class Allocation
+    public class AllocationMap
     {
         public const int Interval = 511232;
 
         public List<AllocationMapPage> Pages { get; } = new List<AllocationMapPage>();
-
-        public List<PageAddress> SinglePageSlots { get; set; } = new List<PageAddress>();
-
-        public int FileId { get; set; }
 
         /// <summary>
         /// Determines if the Allocation spans multiple files

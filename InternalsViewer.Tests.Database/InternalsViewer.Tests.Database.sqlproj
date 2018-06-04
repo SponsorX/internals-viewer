@@ -74,6 +74,10 @@
     <Build Include="Tables\Heaps\Data.SimpleHeapNotNullable.sql" />
     <Build Include="Tables\Heaps\Data.SimpleHeapNullable.sql" />
     <Build Include="Tables\Clustered\Data.SimpleClustered.sql" />
+    <Build Include="Files\RefFileGroup.sql" />
+    <Build Include="Files\RefFile.sql" />
+    <Build Include="Tables\Clustered\Data.LargeClustered.sql" />
+    <Build Include="Tables\Heaps\Data.LargeHeap.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment.sql" />

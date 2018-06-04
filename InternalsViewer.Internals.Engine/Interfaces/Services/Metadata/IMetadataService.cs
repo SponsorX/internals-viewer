@@ -11,10 +11,6 @@ namespace InternalsViewer.Internals.Engine.Interfaces.Services.Metadata
 
         Task<IEnumerable<AllocationUnit>> GetAllocationUnits();
 
-        Task<byte> GetCompatabilityLevel();
-
-        Task<Database> GetDatabase();
-
-        Task<int> GetFileSize(int fileId);
+        Task<Database> GetDatabase(string name);
     }
 }

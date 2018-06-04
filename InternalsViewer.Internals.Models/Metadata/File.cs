@@ -20,6 +20,8 @@ namespace InternalsViewer.Internals.Models.Metadata
 
         public string FileGroup { get; set; }
 
+        public string FilePath { get; set; }
+
         public string PhysicalName { get; set; }
 
         public string FileName => PhysicalName.Substring(PhysicalName.LastIndexOf(@"\", StringComparison.Ordinal) + 1);

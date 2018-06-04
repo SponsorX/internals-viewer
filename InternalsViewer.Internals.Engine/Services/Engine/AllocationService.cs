@@ -26,9 +26,9 @@ namespace InternalsViewer.Internals.Engine.Services.Engine
 
         public IDbConnection Connection { get; set; }
 
-        public async Task<Allocation> GetAllocation(int databaseId, PageAddress pageAddress, int fileSize)
+        public async Task<AllocationMap> GetAllocation(int databaseId, PageAddress pageAddress, int fileSize)
         {
-            var allocation = new Allocation();
+            var allocation = new AllocationMap();
 
             await BuildAllocationChain(allocation, databaseId, pageAddress, fileSize);
 
@@ -36,9 +36,9 @@ namespace InternalsViewer.Internals.Engine.Services.Engine
         }
 
         /// <summary>
-        /// Builds the allocation chain following an interval
+        /// Builds the allocation chain following the GAM interval
         /// </summary>
-        private async Task BuildAllocationChain(Allocation allocation,
+        private async Task BuildAllocationChain(AllocationMap allocationMap,
                                                 int databaseId,
                                                 PageAddress pageAddress,
                                                 int fileSize)
@@ -50,8 +50,7 @@ namespace InternalsViewer.Internals.Engine.Services.Engine
                 throw new ArgumentException();
             }
 
-            allocation.Pages.Add(allocationPage);
-            //allocation.SinglePageSlots.AddRange(allocationPage.SinglePageSlots);
+            allocationMap.Pages.Add(allocationPage);
 
             var interval = DatabaseContainer.AllocationInterval;
 
@@ -63,7 +62,7 @@ namespace InternalsViewer.Internals.Engine.Services.Engine
                 {
                     var allocationAddress = new PageAddress(pageAddress.FileId, pageAddress.PageId + i * interval);
 
-                    allocation.Pages.Add(await GetAllocationPage(databaseId, allocationAddress));
+                    allocationMap.Pages.Add(await GetAllocationPage(databaseId, allocationAddress));
                 }
             }
         }

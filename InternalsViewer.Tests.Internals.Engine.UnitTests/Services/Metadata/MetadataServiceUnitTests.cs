@@ -13,11 +13,14 @@ namespace InternalsViewer.Tests.Internals.Engine.UnitTests.Services.Metadata
         [TestMethod]
         public async Task Can_Get_Database()
         {
+            var databaseName = "InternalsViewerTests";
+
             var service = CreateService();
 
-            var result = await service.GetDatabase();
+            var result = await service.GetDatabase(databaseName);
 
-            Assert.AreEqual(result.Name, "aaa");
+            Assert.AreEqual(databaseName, result.Name);
+            Assert.AreEqual(2, result.Files.Count);
         }
 
         public static MetadataService CreateService()
@@ -39,26 +42,6 @@ namespace InternalsViewer.Tests.Internals.Engine.UnitTests.Services.Metadata
             var result = await service.GetAllocationUnits();
 
             Assert.IsTrue(result.Any());
-        }
-
-        [TestMethod]
-        public async Task Can_Get_CompatabilityVersion()
-        {
-            var service = CreateService();
-
-            var result = await service.GetCompatabilityLevel();
-
-            Assert.IsTrue(result > 90);
-        }
-
-        [TestMethod]
-        public async Task Can_Get_FileSize()
-        {
-            var service = CreateService();
-
-            var result = await service.GetFileSize(1);
-
-            Assert.IsTrue(result > 1);
         }
     }
 }

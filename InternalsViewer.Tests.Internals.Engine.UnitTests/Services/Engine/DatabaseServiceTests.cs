@@ -19,14 +19,14 @@ namespace InternalsViewer.Tests.Internals.Engine.UnitTests.Services.Engine
             var pageReader = new DatabasePageReader();
             var pageFreeSpaceService = new PageFreeSpaceService(pageReader);
             var allocationService = new AllocationService(pageReader);
+            var iamService = new IndexAllocationMapService(pageReader);
 
             metadataService.Connection = connection;
             pageReader.Connection = connection;
-            pageFreeSpaceService.Connection = connection;
 
-            var service = new DatabaseService(metadataService, allocationService, pageFreeSpaceService);
+            var service = new DatabaseService(metadataService, allocationService, pageFreeSpaceService, iamService);
 
-            var result = await service.GetDatabase(7);
+            var result = await service.GetDatabase("InternalsViewerTests");
         }
     }
 }

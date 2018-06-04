@@ -10,6 +10,6 @@ namespace InternalsViewer.Internals.Engine.Interfaces.Services.Engine
     {
         IDbConnection Connection { get; set; }
 
-        Task<Allocation> GetAllocation(int databaseId, PageAddress pageAddress, int fileSize);
+        Task<AllocationMap> GetAllocation(int databaseId, PageAddress pageAddress, int fileSize);
     }
 }

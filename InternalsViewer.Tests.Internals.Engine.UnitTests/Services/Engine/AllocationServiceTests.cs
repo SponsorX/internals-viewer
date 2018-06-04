@@ -23,7 +23,6 @@ namespace InternalsViewer.Tests.Internals.Engine.UnitTests.Services.Engine
             var result = await service.GetAllocation(1, new PageAddress(1, 2), 1024);
 
             Assert.IsNotNull(result);
-
         }
     }
 }

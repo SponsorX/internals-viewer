@@ -118,11 +118,14 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Sql_Metadata_AllocationUnits" xml:space="preserve">
-    <value>SELECT o.object_id                          AS ObjectId
+    <value>SELECT iau.allocation_unit_id               AS AllocationUnitId
+      ,o.object_id                          AS ObjectId
 	  ,iau.first_iam_page                   AS FirstIamPage
-      ,s.name                               AS SchemaFilePath
-	  ,o.name                               AS TableFilePath
-      ,i.name                               AS IndexFilePath
+      ,iau.root_page                        AS RootPage
+      ,iau.first_page                       AS FirstPage
+      ,s.name                               AS SchemaName
+	  ,o.name                               AS TableName
+      ,i.name                               AS IndexName
 	  ,is_ms_shipped                        AS IsSystem
       ,p.index_id                           AS IndexId
       ,i.type                               AS IndexType
@@ -149,13 +152,14 @@ ORDER BY is_ms_shipped DESC
   </data>
   <data name="Sql_Metadata_Database" xml:space="preserve">
     <value>SELECT d.database_id                       AS DatabaseId
+      ,df.database_id                      AS DatabaseId
       ,d.name                              AS Name
       ,d.compatibility_level               AS CompatabilityLevel
       ,df.file_id                          AS FileId
       ,df.type                             AS FileType
       ,fg.name                             AS [FileGroup]
       ,df.name                             AS [FilePath]
-      ,physical_name                       AS PhysicalFilePath
+      ,physical_name                       AS PhysicalName
       ,size                                AS Size
       ,fsu.total_page_count / 8            AS TotalExtents
       ,fsu.allocated_extent_page_count / 8 AS UsedExtents

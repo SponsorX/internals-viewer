@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Data;
 using System.Threading.Tasks;
 using InternalsViewer.Internals.Engine.Interfaces.Readers;
 using InternalsViewer.Internals.Engine.Interfaces.Services.Engine;
 using InternalsViewer.Internals.Engine.Parsers.PageParsers;
 using InternalsViewer.Internals.Models.Engine.Address;
 using InternalsViewer.Internals.Models.Engine.Allocations;
-using InternalsViewer.Internals.Models.Engine.Database;
 using InternalsViewer.Internals.Models.Engine.Pages;
 
 namespace InternalsViewer.Internals.Engine.Services.Engine
@@ -20,8 +18,6 @@ namespace InternalsViewer.Internals.Engine.Services.Engine
 
         protected IDatabasePageReader PageReader { get; set; }
 
-        public IDbConnection Connection { get; set; }
-
         public async Task<PageFreeSpace> GetPfs(int databaseId, int fileSize, int fileId)
         {
             var pfs = new PageFreeSpace();
@@ -30,13 +26,13 @@ namespace InternalsViewer.Internals.Engine.Services.Engine
 
             pfs.Pages.Add(page);
 
-            var pfsCount = (int)Math.Ceiling(fileSize / (decimal)DatabaseContainer.PfsInterval);
+            var pfsCount = (int)Math.Ceiling(fileSize / (decimal)PageFreeSpace.Interval);
 
             if (pfsCount > 1)
             {
                 for (var i = 1; i < pfsCount; i++)
                 {
-                    page = await GetPfsPage(databaseId, new PageAddress(fileId, i * DatabaseContainer.PfsInterval));
+                    page = await GetPfsPage(databaseId, new PageAddress(fileId, i * PageFreeSpace.Interval));
 
                     pfs.Pages.Add(page);
                 }

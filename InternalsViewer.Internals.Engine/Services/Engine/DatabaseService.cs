@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Reflection;
+using System.Threading.Tasks;
+using InternalsViewer.Internals.Engine.Interfaces.Services;
 using InternalsViewer.Internals.Engine.Interfaces.Services.Engine;
 using InternalsViewer.Internals.Engine.Interfaces.Services.Metadata;
 using InternalsViewer.Internals.Models.Engine.Address;
@@ -8,13 +11,20 @@ namespace InternalsViewer.Internals.Engine.Services.Engine
 {
     public class DatabaseService
     {
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
+        /// <summary>
+        /// Service responsible for loading a DatabaseContainer, with metadata, allocation bitmaps (GAM, SGAM, DCM, BCM) and the PFS
+        /// </summary>
         public DatabaseService(IMetadataService metadataService,
                                IAllocationService allocationService,
-                               IPageFreeSpaceService pageFreeSpaceService)
+                               IPageFreeSpaceService pageFreeSpaceService,
+                               IIndexAllocationMapService indexAllocationMapService)
         {
             MetadataService = metadataService;
             AllocationService = allocationService;
             PageFreeSpaceService = pageFreeSpaceService;
+            IndexAllocationMapService = indexAllocationMapService;
         }
 
         public IMetadataService MetadataService { get; set; }
@@ -23,52 +33,84 @@ namespace InternalsViewer.Internals.Engine.Services.Engine
 
         public IPageFreeSpaceService PageFreeSpaceService { get; set; }
 
-        public async Task<DatabaseContainer> GetDatabase(int databaseId)
+        public IIndexAllocationMapService IndexAllocationMapService { get; set; }
+
+        public async Task<DatabaseContainer> GetDatabase(string databaseName)
         {
-            var databaseInfo = await MetadataService.GetDatabase();
+            var databaseInfo = await MetadataService.GetDatabase(databaseName);
 
             var database = new DatabaseContainer
             {
-                DatabaseId = databaseId,
+                DatabaseId = databaseInfo.DatabaseId,
                 Files = databaseInfo.Files,
                 CompatibilityLevel = databaseInfo.CompatabilityLevel,
-                AllocationUnits =  await MetadataService.GetAllocationUnits()
+                AllocationUnits = await MetadataService.GetAllocationUnits()
             };
 
             await LoadAllocations(database);
 
             await LoadPfs(database);
 
+            await LoadIndexAllocationMaps(database);
+
             return database;
         }
 
-        private async Task LoadAllocations(DatabaseContainer database)
+        public async Task LoadAllocations(DatabaseContainer database)
         {
+            Log.Debug($"Getting allocations");
+
             foreach (var file in database.Files)
             {
+                Log.Debug($"Getting allocations for File: {file.FileId} - {file.FileName}");
+
                 var fileSize = file.Size;
 
+                Log.Debug($"Loading GAM");
                 var gam = await AllocationService.GetAllocation(database.DatabaseId, new PageAddress(file.FileId, 2), fileSize);
                 database.Gam.Add(file.FileId, gam);
+
+                Log.Debug($"Loading SGAM");
 
                 var sGam = await AllocationService.GetAllocation(database.DatabaseId, new PageAddress(file.FileId, 3), fileSize);
                 database.SGam.Add(file.FileId, sGam);
 
+                Log.Debug($"Loading DCM");
                 var dcm = await AllocationService.GetAllocation(database.DatabaseId, new PageAddress(file.FileId, 6), fileSize);
                 database.Dcm.Add(file.FileId, dcm);
 
+                Log.Debug($"Loading BCM");
                 var bcm = await AllocationService.GetAllocation(database.DatabaseId, new PageAddress(file.FileId, 7), fileSize);
                 database.Bcm.Add(file.FileId, bcm);
             }
         }
 
-        private async Task LoadPfs(DatabaseContainer database)
+        public async Task LoadPfs(DatabaseContainer database)
         {
+            Log.Debug($"Getting PFS");
+
             foreach (var file in database.Files)
             {
+                Log.Debug($"Getting allocations for File: {file.FileId} - {file.FileName}");
+
                 var pfs = await PageFreeSpaceService.GetPfs(database.DatabaseId, file.Size, file.FileId);
 
                 database.Pfs.Add(file.FileId, pfs);
+            }
+        }
+
+        public async Task LoadIndexAllocationMaps(DatabaseContainer container)
+        {
+            Log.Debug($"Getting IAMs");
+
+            foreach (var allocationUnit in container.AllocationUnits.Where(p => p.FirstIamPage != PageAddress.Empty))
+            {
+                Log.Debug($"Getting IAM for Allocation Unit {allocationUnit.AllocationUnitId} - {allocationUnit.SchemaName}.{allocationUnit.TableName}.{allocationUnit.IndexName}");
+
+                var iam = await IndexAllocationMapService.GetAllocation(container.DatabaseId,
+                                                                        allocationUnit.FirstIamPage);
+
+                container.IndexAllocationMaps.Add(allocationUnit.AllocationUnitId, iam);
             }
         }
     }

@@ -20,12 +20,15 @@ namespace InternalsViewer.Internals.Engine.Services.Metadata
             SqlMapper.AddTypeHandler(PageAddressTypeMapper.Default);
         }
 
-        public  async Task<Database> GetDatabase()
+        public async Task<Database> GetDatabase(string name)
         {
-            var result = await Connection.QueryAsync<Database, File[], Database>(Properties.Resources.Sql_Metadata_Database,
+            Connection.Open();
+            Connection.ChangeDatabase(name);
+
+            var result = await Connection.QueryAsync<Database, File, Database>(Properties.Resources.Sql_Metadata_Database,
                 (database, file) =>
                 {
-                    database.Files = file;
+                    database.Files.Add(file);
 
                     return database;
                 }, splitOn: "FileId");
@@ -36,17 +39,6 @@ namespace InternalsViewer.Internals.Engine.Services.Metadata
         public Task<IEnumerable<AllocationUnit>> GetAllocationUnits()
         {
             return Connection.QueryAsync<AllocationUnit>(Properties.Resources.Sql_Metadata_AllocationUnits);
-        }
-
-        public Task<int> GetFileSize(int fileId)
-        {
-            return Connection.ExecuteScalarAsync<int>(Properties.Resources.Sql_Metadata_FileSize,
-                                                      new { FileId = fileId });
-        }
-
-        public Task<byte> GetCompatabilityLevel()
-        {
-            return Connection.ExecuteScalarAsync<byte>(Properties.Resources.Sql_Metadata_CompatabilityLevel);
         }
     }
 }

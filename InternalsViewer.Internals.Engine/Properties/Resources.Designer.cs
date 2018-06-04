@@ -70,15 +70,15 @@ namespace InternalsViewer.Internals.Engine.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT o.object_id                          AS ObjectId
+        ///   Looks up a localized string similar to SELECT iau.allocation_unit_id               AS AllocationUnitId
+        ///      ,o.object_id                          AS ObjectId
         ///	  ,iau.first_iam_page                   AS FirstIamPage
-        ///      ,s.name                               AS SchemaFilePath
-        ///	  ,o.name                               AS TableFilePath
-        ///      ,i.name                               AS IndexFilePath
-        ///	  ,is_ms_shipped                        AS IsSystem
-        ///      ,p.index_id                           AS IndexId
-        ///      ,i.type                               AS IndexType
-        ///      ,iau.type                             A [rest of string was truncated]&quot;;.
+        ///      ,iau.root_page                        AS RootPage
+        ///      ,iau.first_page                       AS FirstPage
+        ///      ,s.name                               AS SchemaName
+        ///	  ,o.name                               AS TableName
+        ///      ,i.name                               AS IndexName
+        ///	  ,is_ms_shipped                        AS I [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Sql_Metadata_AllocationUnits {
             get {
@@ -97,14 +97,14 @@ namespace InternalsViewer.Internals.Engine.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to SELECT d.database_id                       AS DatabaseId
+        ///      ,df.database_id                      AS DatabaseId
         ///      ,d.name                              AS Name
         ///      ,d.compatibility_level               AS CompatabilityLevel
         ///      ,df.file_id                          AS FileId
         ///      ,df.type                             AS FileType
         ///      ,fg.name                             AS [FileGroup]
         ///      ,df.name                             AS [FilePath]
-        ///      ,physical_name                       AS PhysicalFilePath
-        ///      ,size                                AS [rest of string was truncated]&quot;;.
+        ///      ,physical_name                       AS Physi [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Sql_Metadata_Database {
             get {

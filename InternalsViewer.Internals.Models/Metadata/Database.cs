@@ -10,6 +10,6 @@ namespace InternalsViewer.Internals.Models.Metadata
 
         public byte CompatabilityLevel { get; set; }
 
-        public IEnumerable<File> Files { get; set; }
+        public List<File> Files { get; set; } = new List<File>();
     }
 }
