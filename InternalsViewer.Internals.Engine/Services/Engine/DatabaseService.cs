@@ -9,7 +9,7 @@ using InternalsViewer.Internals.Models.Engine.Database;
 
 namespace InternalsViewer.Internals.Engine.Services.Engine
 {
-    public class DatabaseService
+    public class DatabaseService : IDatabaseService
     {
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -27,13 +27,13 @@ namespace InternalsViewer.Internals.Engine.Services.Engine
             IndexAllocationMapService = indexAllocationMapService;
         }
 
-        public IMetadataService MetadataService { get; set; }
+        protected IMetadataService MetadataService { get; set; }
 
-        public IAllocationService AllocationService { get; set; }
+        protected IAllocationService AllocationService { get; set; }
 
-        public IPageFreeSpaceService PageFreeSpaceService { get; set; }
+        protected IPageFreeSpaceService PageFreeSpaceService { get; set; }
 
-        public IIndexAllocationMapService IndexAllocationMapService { get; set; }
+        protected IIndexAllocationMapService IndexAllocationMapService { get; set; }
 
         public async Task<DatabaseContainer> GetDatabase(string databaseName)
         {
@@ -105,7 +105,11 @@ namespace InternalsViewer.Internals.Engine.Services.Engine
 
             foreach (var allocationUnit in container.AllocationUnits.Where(p => p.FirstIamPage != PageAddress.Empty))
             {
-                Log.Debug($"Getting IAM for Allocation Unit {allocationUnit.AllocationUnitId} - {allocationUnit.SchemaName}.{allocationUnit.TableName}.{allocationUnit.IndexName}");
+                Log.DebugFormat("Getting IAM for Allocation Unit {0} - {1}.{2}.{3}",
+                                allocationUnit.AllocationUnitId,
+                                allocationUnit.SchemaName,
+                                allocationUnit.TableName,
+                                allocationUnit.IndexName);
 
                 var iam = await IndexAllocationMapService.GetAllocation(container.DatabaseId,
                                                                         allocationUnit.FirstIamPage);

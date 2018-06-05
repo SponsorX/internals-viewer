@@ -7,8 +7,6 @@ namespace InternalsViewer.Internals.Engine.Interfaces.Readers
 {
     public interface IDatabasePageReader
     {
-        IDbConnection Connection { get; set; }
-
         Task<RawPage> Read(int databaseId, PageAddress pageAddress);
     }
 }

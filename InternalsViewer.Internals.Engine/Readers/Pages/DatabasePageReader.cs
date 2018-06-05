@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 using InternalsViewer.Internals.Engine.Interfaces.Readers;
+using InternalsViewer.Internals.Engine.Interfaces.Services;
 using InternalsViewer.Internals.Engine.Readers.Headers;
 using InternalsViewer.Internals.Models.Engine.Address;
 using InternalsViewer.Internals.Models.Engine.Pages;
@@ -15,10 +16,17 @@ namespace InternalsViewer.Internals.Engine.Readers.Pages
     /// </summary>
     public class DatabasePageReader : PageReader, IDatabasePageReader
     {
-        public IDbConnection Connection { get; set; }
+        public DatabasePageReader(IDatabaseConnection databaseConnection)
+        {
+            DatabaseConnection = databaseConnection;
+        }
+
+        public IDatabaseConnection DatabaseConnection { get; set; }
 
         public async Task<RawPage> Read(int databaseId, PageAddress pageAddress)
         {
+            var connection = DatabaseConnection.GetConnection();
+
             var pageCommand = string.Format(Properties.Resources.Sql_DatabasePageReader_Page,
                                             databaseId,
                                             pageAddress.FileId,
@@ -29,12 +37,12 @@ namespace InternalsViewer.Internals.Engine.Readers.Pages
 
             var headerData = new Dictionary<string, string>();
 
-            if (Connection.State != ConnectionState.Open)
+            if (connection.State != ConnectionState.Open)
             {
-                Connection.Open();
+                connection.Open();
             }
 
-            var command = new SqlCommand(pageCommand, (SqlConnection)Connection)
+            var command = new SqlCommand(pageCommand, (SqlConnection)connection)
             {
                 CommandType = CommandType.Text
             };
@@ -61,7 +69,7 @@ namespace InternalsViewer.Internals.Engine.Readers.Pages
             }
 
             command.Dispose();
-            Connection.Close();
+            connection.Close();
 
             return GetRawPage(data, headerData);
         }

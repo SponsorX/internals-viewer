@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Reflection;
 using System.Threading.Tasks;
 using InternalsViewer.Internals.Engine.Interfaces.Readers;
 using InternalsViewer.Internals.Engine.Interfaces.Services;
@@ -12,6 +13,8 @@ namespace InternalsViewer.Internals.Engine.Services.Engine
 {
     public class IndexAllocationMapService : IIndexAllocationMapService
     {
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
         public IndexAllocationMapService(IDatabasePageReader pageReader)
         {
             PageReader = pageReader;
@@ -36,7 +39,8 @@ namespace InternalsViewer.Internals.Engine.Services.Engine
 
                 if (page.Header.PageType != PageType.Iam)
                 {
-                    throw new ArgumentException($"Page {pageAddress} is not an IAM page");
+                    Log.Error($"Page {pageAddress} is not an IAM page");
+                    return;
                 }
 
                 allocationMap.Pages.Add(page);

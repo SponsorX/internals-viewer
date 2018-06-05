@@ -7,10 +7,9 @@ namespace InternalsViewer.Internals.Engine.Interfaces.Services.Metadata
 {
     public interface IMetadataService
     {
-        IDbConnection Connection { get; set; }
-
         Task<IEnumerable<AllocationUnit>> GetAllocationUnits();
 
         Task<Database> GetDatabase(string name);
     }
+
 }

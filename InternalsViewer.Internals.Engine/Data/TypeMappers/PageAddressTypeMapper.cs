@@ -19,7 +19,7 @@ namespace InternalsViewer.Internals.Engine.Data.TypeMappers
 
             public override void SetValue(IDbDataParameter parameter, PageAddress value)
             {
-                parameter.Value = string.Join(",", value);
+                parameter.Value = value.ToString();
             }
 
             public override PageAddress Parse(object value)

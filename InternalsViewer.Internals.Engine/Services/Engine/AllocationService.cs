@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using InternalsViewer.Internals.Engine.Interfaces.Readers;
 using InternalsViewer.Internals.Engine.Interfaces.Services.Engine;
-using InternalsViewer.Internals.Engine.Parsers;
 using InternalsViewer.Internals.Engine.Parsers.PageParsers;
 using InternalsViewer.Internals.Models.Engine.Address;
 using InternalsViewer.Internals.Models.Engine.Allocations;
-using InternalsViewer.Internals.Models.Engine.Database;
 using InternalsViewer.Internals.Models.Engine.Pages;
 
 namespace InternalsViewer.Internals.Engine.Services.Engine
@@ -52,7 +47,7 @@ namespace InternalsViewer.Internals.Engine.Services.Engine
 
             allocationMap.Pages.Add(allocationPage);
 
-            var interval = DatabaseContainer.AllocationInterval;
+            var interval = AllocationMap.Interval;
 
             var pageCount = (int)Math.Ceiling(fileSize / (decimal)interval);
 
@@ -60,7 +55,7 @@ namespace InternalsViewer.Internals.Engine.Services.Engine
             {
                 for (var i = 1; i < pageCount; i++)
                 {
-                    var allocationAddress = new PageAddress(pageAddress.FileId, pageAddress.PageId + i * interval);
+                    var allocationAddress = new PageAddress(pageAddress.FileId, pageAddress.PageId + (i * interval));
 
                     allocationMap.Pages.Add(await GetAllocationPage(databaseId, allocationAddress));
                 }

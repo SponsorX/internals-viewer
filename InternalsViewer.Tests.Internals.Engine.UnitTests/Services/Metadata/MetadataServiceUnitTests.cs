@@ -2,6 +2,7 @@
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using InternalsViewer.Internals.Engine.Services.Engine;
 using InternalsViewer.Internals.Engine.Services.Metadata;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -25,11 +26,10 @@ namespace InternalsViewer.Tests.Internals.Engine.UnitTests.Services.Metadata
 
         public static MetadataService CreateService()
         {
-            var connection = new SqlConnection(Properties.Settings.Default.TestDatabaseConnectionString);
+            var databaseConnection = new DatabaseConnection();
+            databaseConnection.ConnectionString = Properties.Settings.Default.TestDatabaseConnectionString;
 
-            var service = new MetadataService();
-
-            service.Connection = connection;
+            var service = new MetadataService(databaseConnection);
 
             return service;
         }

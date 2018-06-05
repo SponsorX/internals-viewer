@@ -13,16 +13,14 @@ namespace InternalsViewer.Tests.Internals.Engine.UnitTests.Services.Engine
         [TestMethod]
         public async Task Can_Load_Test_Database()
         {
-            var connection = new SqlConnection(Properties.Settings.Default.TestDatabaseConnectionString);
+            var databaseConnection = new DatabaseConnection();
+            databaseConnection.ConnectionString = Properties.Settings.Default.TestDatabaseConnectionString;
 
-            var metadataService = new MetadataService();
-            var pageReader = new DatabasePageReader();
+            var metadataService = new MetadataService(databaseConnection);
+            var pageReader = new DatabasePageReader(databaseConnection);
             var pageFreeSpaceService = new PageFreeSpaceService(pageReader);
             var allocationService = new AllocationService(pageReader);
             var iamService = new IndexAllocationMapService(pageReader);
-
-            metadataService.Connection = connection;
-            pageReader.Connection = connection;
 
             var service = new DatabaseService(metadataService, allocationService, pageFreeSpaceService, iamService);
 

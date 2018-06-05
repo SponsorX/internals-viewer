@@ -1,6 +1,7 @@
 ﻿using System.Data.SqlClient;
 using System.Threading.Tasks;
 using InternalsViewer.Internals.Engine.Readers.Pages;
+using InternalsViewer.Internals.Engine.Services.Engine;
 using InternalsViewer.Internals.Models.Engine.Address;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -12,11 +13,10 @@ namespace InternalsViewer.Tests.Internals.Engine.UnitTests.Readers.Pages
         [TestMethod]
         public async Task Can_Read_Page()
         {
-            var reader = new DatabasePageReader();
+            var databaseConnection = new DatabaseConnection();
+            databaseConnection.ConnectionString = Properties.Settings.Default.TestDatabaseConnectionString;
 
-            var connection = new SqlConnection(Properties.Settings.Default.TestDatabaseConnectionString);
-
-            reader.Connection = connection;
+            var reader = new DatabasePageReader(databaseConnection);
 
             var page = await reader.Read(11, new PageAddress(1, 632));
 

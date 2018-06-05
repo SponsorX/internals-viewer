@@ -70,13 +70,18 @@
     <Compile Include="Readers\Pages\PageReader.cs" />
     <Compile Include="Readers\Pages\TextPageReader.cs" />
     <Compile Include="Services\Engine\AllocationService.cs" />
+    <Compile Include="Services\Engine\DatabaseConnection.cs" />
     <Compile Include="Services\Engine\DatabaseService.cs" />
     <Compile Include="Interfaces\Services\Metadata\IMetadataService.cs" />
     <Compile Include="Interfaces\Services\Engine\IAllocationService.cs" />
     <Compile Include="Interfaces\Services\Engine\IPageFreeSpaceService.cs" />
     <Compile Include="Interfaces\Services\IIndexAllocationMapService.cs" />
+    <Compile Include="Interfaces\Services\Engine\IDatabaseService.cs" />
+    <Compile Include="Interfaces\Services\IDatabaseConnection.cs" />
     <Compile Include="Services\Engine\IndexAllocationMapService.cs" />
+    <Compile Include="Interfaces\Services\Engine\IServerService.cs" />
     <Compile Include="Services\Engine\PageFreeSpaceService.cs" />
+    <Compile Include="Services\Engine\ServerService.cs" />
     <Compile Include="Services\Metadata\MetadataService.cs" />
   </ItemGroup>
   <ItemGroup>

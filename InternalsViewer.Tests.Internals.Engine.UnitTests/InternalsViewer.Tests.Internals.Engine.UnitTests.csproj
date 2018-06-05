@@ -66,6 +66,7 @@
     <Compile Include="Services\Engine\DatabaseServiceTests.cs" />
     <Compile Include="Services\Metadata\MetadataServiceUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Engine\ServerServiceUnitTests.cs" />
     <Compile Include="Settings.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -113,6 +113,15 @@ namespace InternalsViewer.Internals.Engine.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SELECT name FROM sys.databases ORDER BY name ASC.
+        /// </summary>
+        internal static string Sql_Metadata_Databases {
+            get {
+                return ResourceManager.GetString("Sql_Metadata_Databases", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SELECT size FROM sys.database_files WHERE file_id = @FileId.
         /// </summary>
         internal static string Sql_Metadata_FileSize {
