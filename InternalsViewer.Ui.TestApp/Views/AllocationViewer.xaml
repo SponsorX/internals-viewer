@@ -6,6 +6,9 @@
              xmlns:local="clr-namespace:InternalsViewer.Ui.TestApp.Views"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:mvvm="http://prismlibrary.com/"
+             xmlns:allocations="clr-namespace:InternalsViewer.Internals.Models.Engine.Allocations;assembly=InternalsViewer.Internals.Models"
+             xmlns:d1="clr-namespace:InternalsViewer.Ui.TestApp.ViewModels"
+             xmlns:controls="clr-namespace:InternalsViewer.Ui.TestApp.Controls"
              mc:Ignorable="d"
              mvvm:ViewModelLocator.AutoWireViewModel="True"
              d:DesignHeight="450" d:DesignWidth="800">
@@ -25,11 +28,11 @@
             <xctk:SplitButton Content="Allocation">
                 <xctk:SplitButton.DropDownContent>
                     <Menu>
-                    <MenuItem Header="MenuItem 1"/>
-                    <MenuItem Header="MenuItem 2">
                         <MenuItem Header="MenuItem 1"/>
-                        <MenuItem Header="MenuItem 2"/>
-                    </MenuItem>
+                        <MenuItem Header="MenuItem 2">
+                            <MenuItem Header="MenuItem 1"/>
+                            <MenuItem Header="MenuItem 2"/>
+                        </MenuItem>
                     </Menu>
                 </xctk:SplitButton.DropDownContent>
             </xctk:SplitButton>
@@ -63,8 +66,11 @@
                     </StackPanel>
                 </xctk:WatermarkTextBox.Watermark>
             </xctk:WatermarkTextBox>
-</ToolBar>
-        <local:AllocationMapView HorizontalAlignment="Stretch" Grid.Row="1" 	HorizontalContentAlignment="Stretch"
-                                 VerticalContentAlignment="Stretch" />
+        </ToolBar>
+        <controls:AllocationMapControl HorizontalAlignment="Stretch"
+                                        Grid.Row="1"
+                                        Layers="{Binding AllocationLayers}"
+                                        HorizontalContentAlignment="Stretch"
+                                        VerticalContentAlignment="Stretch" />
     </Grid>
 </UserControl>

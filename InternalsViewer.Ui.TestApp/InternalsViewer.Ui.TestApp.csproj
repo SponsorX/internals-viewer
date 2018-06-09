@@ -128,20 +128,23 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Controls\AllocationMapControl.xaml.cs">
+      <DependentUpon>AllocationMapControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\Colours\ExtentColour.cs" />
     <Compile Include="Helpers\Colours\HsvColour.cs" />
     <Compile Include="Helpers\Extensions\CollectionExtensions.cs" />
     <Compile Include="Helpers\ConnectionStrings\ConnectionStringHelper.cs" />
     <Compile Include="Models\AllocationLayer.cs" />
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="ViewModels\AllocationMapViewModel.cs" />
     <Compile Include="ViewModels\AllocationViewerViewModel.cs" />
-    <Compile Include="Views\AllocationMapView.xaml.cs">
-      <DependentUpon>AllocationMapView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\AllocationViewer.xaml.cs">
       <DependentUpon>AllocationViewer.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\AllocationMapControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -154,10 +157,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\AllocationMapView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\AllocationViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

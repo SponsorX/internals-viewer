@@ -18,6 +18,7 @@ using InternalsViewer.Internals.Models.Engine.Database;
 using InternalsViewer.Ui.TestApp.Annotations;
 using InternalsViewer.Ui.TestApp.Helpers;
 using InternalsViewer.Ui.TestApp.Helpers.Extensions;
+using InternalsViewer.Ui.TestApp.Models;
 using Microsoft.SqlServer.Management.Common;
 using Microsoft.SqlServer.Management.Smo.RegSvrEnum;
 using Microsoft.SqlServer.Management.UI.ConnectionDlg;
@@ -33,6 +34,7 @@ namespace InternalsViewer.Ui.TestApp.ViewModels
         private ObservableCollection<string> databases;
         private string selectedDatabase;
         private DatabaseContainer databaseContainer;
+        private AllocationLayers allocationLayers;
 
         public AllocationViewerViewModel(IDatabaseConnection connection, IDatabaseService databaseService,
             IServerService serverService)
@@ -84,6 +86,17 @@ namespace InternalsViewer.Ui.TestApp.ViewModels
             }
         }
 
+        public AllocationLayers AllocationLayers
+        {
+            get => allocationLayers;
+
+            set
+            {
+                allocationLayers = value;
+                RaisePropertyChanged();
+            }
+        }
+
         private async void Connect()
         {
             using (var dialog = new ShellConnectionDialog())
@@ -121,6 +134,12 @@ namespace InternalsViewer.Ui.TestApp.ViewModels
             DatabaseConnection.SetDatabase(databaseName);
 
             DatabaseContainer = await DatabaseService.GetDatabase(databaseName);
+
+            AllocationLayers = new AllocationLayers
+            {
+            };
+
+            RaisePropertyChanged($"AllocationLayers");
         }
     }
 }
